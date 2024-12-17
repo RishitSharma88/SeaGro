@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaGro</title>
+    <style>
+        body {
+            background-color: rgb(253, 253, 253);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #2320b3, #4890e8);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 10px 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar a:hover {
+            color: #64d0f1;
+            transform: scale(1.1);
+        }
+
+        /* Title Section */
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            animation: rainbow-text 3s infinite;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        @keyframes rainbow-text {
+            0% { color: #64d0f1; }
+            25% { color: #4890e8; }
+            50% { color: #2320b3; }
+            75% { color: #4890e8; }
+            100% { color: #64d0f1; }
+        }
+
+        section {
+            padding: 50px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* Chat Icon Box */
+        .chat-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4890e8;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .chat-box:hover {
+            background-color: #2320b3;
+            transform: scale(1.1);
+        }
+
+        .chat-box img {
+            width: 20px;
+            height: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <a href="#">User Profiles</a>
+        <a href="jobBoard.html">Job Board</a>
+        <a href="#">Learning Center</a>
+        <a href="#">Community</a>
+        <a href="#">Bike Sharing</a>
+        <a href="Dailytechnews.html">Daily Tech News</a>
+        <a href="todolist.html">To-Do Lists</a>
+        <a href="#">Content Sharing</a>
+    </nav>
+
+    <!-- Content Section -->
+    <section>
+        <h1 class="title">SeaGro</h1>
+        <p>...........................................</p>
+    </section>
+
+    <!-- Chat Icon Box -->
+    <a href="#chat" class="chat-box">
+        <img src="https://www.pngplay.com/wp-content/uploads/7/Chat-Icon-PNG-HD-Quality.png" alt="Chat Icon">
+        Chat with Us
+    </a>
+
+    <script>
+        // WebSocket connection URL (replace 'localhost' with your server's IP if not running locally)
+        const socket = new WebSocket("ws://localhost:6789");
+    
+        // Elements
+        const chatButton = document.querySelector('.chat-box');
+        const chatWindow = document.createElement('div');
+        const chatInput = document.createElement('input');
+        const chatMessages = document.createElement('div');
+        const chatSendButton = document.createElement('button');
+    
+        // Chat window styling
+        chatWindow.style.position = 'fixed';
+        chatWindow.style.bottom = '80px';
+        chatWindow.style.right = '30px';
+        chatWindow.style.width = '300px';
+        chatWindow.style.height = '400px';
+        chatWindow.style.backgroundColor = '#fff';
+        chatWindow.style.boxShadow = '0 3px 8px rgba(0, 0, 0, 0.3)';
+        chatWindow.style.borderRadius = '10px';
+        chatWindow.style.display = 'none';
+        chatWindow.style.flexDirection = 'column';
+        chatWindow.style.padding = '10px';
+        chatWindow.style.zIndex = '1000';
+    
+        // Chat messages area styling
+        chatMessages.style.flex = '1';
+        chatMessages.style.overflowY = 'auto';
+        chatMessages.style.marginBottom = '10px';
+    
+        // Chat input styling
+        chatInput.type = 'text';
+        chatInput.placeholder = 'Type a message...';
+        chatInput.style.width = 'calc(100% - 50px)';
+        chatInput.style.marginRight = '5px';
+    
+        // Chat send button
+        chatSendButton.textContent = 'Send';
+        chatSendButton.style.width = '40px';
+    
+        // Add elements to chat window
+        chatWindow.appendChild(chatMessages);
+        const inputContainer = document.createElement('div');
+        inputContainer.style.display = 'flex';
+        inputContainer.appendChild(chatInput);
+        inputContainer.appendChild(chatSendButton);
+        chatWindow.appendChild(inputContainer);
+        document.body.appendChild(chatWindow);
+    
+        // Toggle chat window on button click
+        chatButton.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+        });
+    
+        // Handle WebSocket events
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+    
+        socket.onmessage = (event) => {
+            const message = event.data;
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `Server: ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        };
+    
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+    
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+    
+        // Send message to server on button click
+        chatSendButton.addEventListener('click', () => {
+            const message = chatInput.value;
+            if (message.trim() !== '') {
+                socket.send(message);
+                const messageElement = document.createElement('div');
+                messageElement.textContent = `You: ${message}`;
+                messageElement.style.textAlign = 'right';
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+                chatInput.value = ''; // Clear input
+            }
+        });
+    
+        // Send message on Enter key press
+        chatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                chatSendButton.click();
+            }
+        });
+    </script>
+    
+</body>
+</html>
