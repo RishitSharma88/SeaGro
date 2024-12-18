@@ -40,13 +40,24 @@
         }
 
         /* Title Section */
+        .title-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title-container img {
+            width: 60px;
+            height: 60px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
         .title {
             font-size: 3rem;
             font-weight: bold;
             text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
             animation: rainbow-text 3s infinite;
-            text-align: center;
-            margin-bottom: 20px;
+            display: inline-block;
         }
 
         @keyframes rainbow-text {
@@ -55,6 +66,13 @@
             50% { color: #2320b3; }
             75% { color: #4890e8; }
             100% { color: #64d0f1; }
+        }
+
+        .link-placeholder {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #4890e8;
+            text-decoration: underline;
         }
 
         section {
@@ -109,7 +127,7 @@
         <a href="#">User Profiles</a>
         <a href="jobBoard.html">Job Board</a>
         <a href="#">Learning Center</a>
-        <a href="#">Community</a>
+        <a href="community.html">Community</a>
         <a href="#">Bike Sharing</a>
         <a href="Dailytechnews.html">Daily Tech News</a>
         <a href="todolist.html">To-Do Lists</a>
@@ -118,7 +136,9 @@
 
     <!-- Content Section -->
     <section>
-        <h1 class="title">SeaGro</h1>
+        <div class="title-container">
+            <h1 class="title">SeaGro</h1>
+        </div>
         <p>...........................................</p>
     </section>
 

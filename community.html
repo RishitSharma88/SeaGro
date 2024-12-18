@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communities - SeaGro</title>
+    <style>
+        body {
+            background-color: rgb(244, 244, 244);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: rgb(100, 208, 241);
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .navbar .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .navbar .nav-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-links a:hover {
+            color: rgb(35, 32, 179);
+        }
+
+        /* Create Post Button */
+        .createpost-btn {
+            position: absolute;
+            top: 100px;
+            left: 20px;
+            background-color: rgb(100, 208, 241);
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .createpost-btn:hover {
+            background-color: rgb(100, 208, 241);
+            color: rgb(139, 137, 241);
+            box-shadow: 0 5px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .createpost-btn span {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Right Container */
+        .rightcontainer {
+            background-color: rgb(250, 250, 250);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 20px;
+            width: 25%;
+            height: 100vh;
+            overflow-y: auto;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+            right: 0;
+        }
+
+        .rightcontainer h2 {
+            font-size: 1.8rem;
+            color: rgb(151, 149, 246);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Community Card */
+        .community-card {
+            background-color: rgb(100, 208, 241);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .community-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .community-card .community-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .community-card .join-btn {
+            background-color: #fff;
+            color: rgb(100, 208, 241);
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .community-card .join-btn:hover {
+            background-color: rgb(35, 32, 179);
+            color: #fff;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgb(100, 208, 241);
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="logo">SeaGro</div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Communities</a>
+            <a href="#">Explore</a>
+            <a href="#">Profile</a>
+        </div>
+    </div>
+
+    <!-- Create Post Button -->
+    <button class="createpost-btn">
+        <span>+</span> Create Post
+    </button>
+
+    <!-- Right Container -->
+    <div class="rightcontainer">
+        <h2>Communities</h2>
+
+        <!-- Community Cards -->
+        <div class="community-card">
+            <span class="community-title">Beach Explorers</span>
+            <button class="join-btn">Join</button>
+        </div>
+        <div class="community-card">
+            <span class="community-title">Sea Lovers</span>
+            <button class="join-btn">Join</button>
+        </div>
+        <div class="community-card">
+            <span class="community-title">Travel Bloggers</span>
+            <button class="join-btn">Join</button>
+        </div>
+        <div class="community-card">
+            <span class="community-title">Ocean Conservation</span>
+            <button class="join-btn">Join</button>
+        </div>
+        <div class="community-card">
+            <span class="community-title">Photography Enthusiasts</span>
+            <button class="join-btn">Join</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 SeaGro. All Rights Reserved.</p>
+    </div>
+</body>
+</html>

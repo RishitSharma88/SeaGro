@@ -12,7 +12,7 @@
             padding: 0;
         }
 
-        /* Header */
+       
         .header {
             background: linear-gradient(135deg, #2320b3, #4890e8);
             color: #fff;
@@ -26,7 +26,7 @@
             font-size: 2.5rem;
         }
 
-        /* To-Do List Container */
+        
         .todo-container {
             max-width: 600px;
             margin: 30px auto;
@@ -110,35 +110,35 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
+    
     <div class="header">
         <h1>To-Do List</h1>
     </div>
 
-    <!-- To-Do List Container -->
+   
     <div class="todo-container">
         <h2>Manage Your Tasks</h2>
-        <!-- Input Section -->
+       
         <div class="todo-input">
             <input type="text" id="todo-input" placeholder="Enter a new task...">
             <button id="add-task-btn">Add Task</button>
         </div>
-        <!-- To-Do List -->
+        
         <ul class="todo-list" id="todo-list"></ul>
     </div>
 
     <script>
-        // Elements
+        
         const taskInput = document.getElementById("todo-input");
         const addTaskButton = document.getElementById("add-task-btn");
         const todoList = document.getElementById("todo-list");
 
-        // Load tasks from localStorage
+      
         let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-        // Render tasks
+        
         function renderTasks() {
-            todoList.innerHTML = ""; // Clear list
+            todoList.innerHTML = ""; 
             tasks.forEach((task, index) => {
                 const taskItem = document.createElement("li");
                 taskItem.className = "todo-item";
@@ -157,7 +157,7 @@
             });
         }
 
-        // Add a new task
+       
         function addTask() {
             const task = taskInput.value.trim();
             if (task) {
@@ -170,19 +170,19 @@
             }
         }
 
-        // Delete a task
+        
         function deleteTask(index) {
             tasks.splice(index, 1);
             saveTasks();
             renderTasks();
         }
 
-        // Save tasks to localStorage
+        
         function saveTasks() {
             localStorage.setItem("tasks", JSON.stringify(tasks));
         }
 
-        // Event Listeners
+       
         addTaskButton.addEventListener("click", addTask);
         taskInput.addEventListener("keypress", (event) => {
             if (event.key === "Enter") {
@@ -190,7 +190,7 @@
             }
         });
 
-        // Initial render
+        
         renderTasks();
     </script>
 </body>
