@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaGro</title>
+    <style>
+        body {
+            background-color: #CAF0F8; /* Sky Blue Tint */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #03045E; /* Deep Navy */
+            transition: background-color 0.5s ease;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #0077B6, #00B4D8); /* Sea Blue to Aqua Green */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #F8F9FA; /* Wave White */
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 10px 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar a:hover {
+            color: #FFD166; /* Sand Yellow */
+            transform: scale(1.1);
+        }
+
+        .navbar img.logo {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        /* Title Section */
+        .title-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .title-container img.logo {
+            width: 80px;
+            height: 80px;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            animation: rainbow-text 3s infinite;
+            display: inline-block;
+        }
+
+        @keyframes rainbow-text {
+            0% { color: #56CFE1; } /* Electric Aqua */
+            25% { color: #00B4D8; } /* Aqua Green */
+            50% { color: #0077B6; } /* Sea Blue */
+            75% { color: #00B4D8; }
+            100% { color: #56CFE1; }
+        }
+
+        section {
+            padding: 50px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* Chat Icon Box */
+        .chat-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #00B4D8; /* Aqua Green */
+            color: #FAF3DD; /* White Sand */
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .chat-box:hover {
+            background-color: #0077B6; /* Sea Blue */
+            transform: scale(1.1);
+        }
+
+        .chat-box img {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Dark Mode Toggle */
+        .dark-mode {
+            background-color: #00171F; /* Deep Navy */
+            color: #F1FAEE; /* Soft White */
+        }
+
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <img src="https://i.postimg.cc/CKKfdnts/1.png" alt="SeaGro Logo" class="logo">
+        <a href="#">User Profiles</a>
+        <a href="jobBoard.html">Job Board</a>
+        <a href="#">Learning Center</a>
+        <a href="community.html">Community</a>
+        <a href="#">Bike Sharing</a>
+        <a href="Dailytechnews.html">Daily Tech News</a>
+        <a href="todolist.html">To-Do Lists</a>
+        <a href="#">Content Sharing</a>
+    </nav>
+
+    <!-- Content Section -->
+    <section>
+        <div class="title-container">
+            <img src="https://www.canva.com/design/DAGZqAC4IRs/JtiN_SFURMhjCwgeQxVYNQ/edit?utm_content=DAGZqAC4IRs&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton" alt="SeaGro Logo" class="logo">
+            <h1 class="title">SeaGro</h1>
+        </div>
+        <p>...........................................</p>
+    </section>
+
+    <!-- Chat Icon Box -->
+    <a href="#chat" class="chat-box">
+        <img src="https://www.pngplay.com/wp-content/uploads/7/Chat-Icon-PNG-HD-Quality.png" alt="Chat Icon">
+        Chat with Us
+    </a>
+
+</body>
+</html>

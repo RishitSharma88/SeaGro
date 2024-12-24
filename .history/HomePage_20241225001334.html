@@ -13,7 +13,7 @@
         }
 
         /* Navigation Bar */
-        .navbar {
+        /*.navbar {
             background: linear-gradient(135deg, #2320b3, #4890e8);
             display: flex;
             justify-content: space-around;
@@ -32,7 +32,24 @@
             font-size: 1rem;
             padding: 10px 15px;
             transition: color 0.3s ease, transform 0.2s ease;
-        }
+        }*/
+        @media (max-width: 768px) {
+    .navbar {
+        flex-direction: column;
+    }
+    .navbar a {
+        margin: 5px 0;
+    }
+    .chat-messages div {
+    animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+}
+
 
         .navbar a:hover {
             color: #64d0f1;
@@ -137,14 +154,14 @@
     <!-- Content Section -->
     <section>
         <div class="title-container">
-            <img src="https://i.postimg.cc/CKKfdnts/1.png" alt="SeaGro Logo" class="logo">
             <h1 class="title">SeaGro</h1>
         </div>
         <p>...........................................</p>
     </section>
 
     <!-- Chat Icon Box -->
-    <a href="#chat" class="chat-box">
+    <a href="#chat" class="chat-box" aria-label="Chat with customer support">
+
         <img src="https://www.pngplay.com/wp-content/uploads/7/Chat-Icon-PNG-HD-Quality.png" alt="Chat Icon">
         Chat with Us
     </a>

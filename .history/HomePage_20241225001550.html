@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeaGro</title>
+    <style>
+        body {
+            background-color: rgb(253, 253, 253);
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #2320b3, #4890e8);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slide-down 0.6s ease-in-out;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 10px 15px;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #64d0f1;
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        /* Title Section */
+        .title-container {
+            text-align: center;
+            margin: 100px 0 20px 0;
+        }
+
+        .title-container img {
+            width: 60px;
+            height: 60px;
+            vertical-align: middle;
+            margin-right: 10px;
+            animation: rotate-in 1.2s ease;
+        }
+
+        .title {
+            font-size: 3rem;
+            font-weight: bold;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            animation: rainbow-text 3s infinite, bounce 2s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes rainbow-text {
+            0% { color: #64d0f1; }
+            25% { color: #4890e8; }
+            50% { color: #2320b3; }
+            75% { color: #4890e8; }
+            100% { color: #64d0f1; }
+        }
+
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-15px); }
+        }
+
+        @keyframes rotate-in {
+            from { transform: rotate(-360deg); }
+            to { transform: rotate(0); }
+        }
+
+        @keyframes slide-down {
+            from { transform: translateY(-100px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .link-placeholder {
+            margin-top: 10px;
+            font-size: 1.2rem;
+            color: #4890e8;
+            text-decoration: underline;
+        }
+
+        section {
+            padding: 50px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        section p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            line-height: 1.6;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fade-in 1.5s forwards 0.5s;
+        }
+
+        @keyframes fade-in {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Chat Icon Box */
+        .chat-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #4890e8;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            animation: pop-in 0.8s ease-out;
+        }
+
+        .chat-box:hover {
+            background-color: #2320b3;
+            transform: scale(1.2);
+        }
+
+        @keyframes pop-in {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="#">User Profiles</a>
+        <a href="jobBoard.html">Job Board</a>
+        <a href="#">Learning Center</a>
+        <a href="community.html">Community</a>
+        <a href="#">Bike Sharing</a>
+        <a href="Dailytechnews.html">Daily Tech News</a>
+        <a href="todolist.html">To-Do Lists</a>
+        <a href="#">Content Sharing</a>
+    </nav>
+
+    <section>
+        <div class="title-container">
+            <img src="https://cdn-icons-png.flaticon.com/512/5954/5954196.png" alt="Logo">
+            <h1 class="title">SeaGro</h1>
+        </div>
+        <p>Explore endless possibilities with our services and grow your potential!</p>
+    </section>
+
+    <a href="#chat" class="chat-box">
+        <img src="https://www.pngplay.com/wp-content/uploads/7/Chat-Icon-PNG-HD-Quality.png" alt="Chat Icon">
+        Chat with Us
+    </a>
+</body>
+</html>
