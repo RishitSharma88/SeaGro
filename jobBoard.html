@@ -120,13 +120,13 @@
 
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <a href="HomePage.html">Home Page</a>
+        <a href="{{ url_for('/') }}">Home Page</a>
         <a href="#">User Profiles</a>
         <a href="#">Learning Center</a>
-        <a href="community.html">Community</a>
+        <a href="{{ url_for('/community') }}">Community</a>
         <a href="#">Bike Sharing</a>
-        <a href="Dailytechnews.html">Daily Tech News</a>
-        <a href="todolist.html">To-Do Lists</a>
+        <a href="{{ url_for('/technews') }}">Daily Tech News</a>
+        <a href="{{ url_for('/todolist') }}">To-Do Lists</a>
         <a href="#">Content Sharing</a>
     </nav>
 
