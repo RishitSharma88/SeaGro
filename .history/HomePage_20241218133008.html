@@ -6,17 +6,15 @@
     <title>SeaGro</title>
     <style>
         body {
-            background-color: #CAF0F8;
+            background-color: rgb(253, 253, 253);
             font-family: Arial, sans-serif;
-            color: #03045E; /* Deep Navy */
-            transition: background-color 0.5s ease;
             margin: 0;
             padding: 0;
         }
 
         /* Navigation Bar */
         .navbar {
-            background: linear-gradient(135deg, #0077B6, #00B4D8);
+            background: linear-gradient(135deg, #2320b3, #4890e8);
             display: flex;
             justify-content: space-around;
             align-items: center;
@@ -29,7 +27,7 @@
 
         .navbar a {
             text-decoration: none;
-            color: #F8F9FA; /* Wave White */
+            color: #fff;
             font-weight: bold;
             font-size: 1rem;
             padding: 10px 15px;
@@ -37,7 +35,7 @@
         }
 
         .navbar a:hover {
-            color: #FFD166; /* Sand Yellow */
+            color: #64d0f1;
             transform: scale(1.1);
         }
 
@@ -47,11 +45,11 @@
             margin-bottom: 20px;
         }
 
-        .title-container img.logo {
-            width: 150px;
-            height: auto;
-            display: block;
-            margin: 20px auto 10px auto;
+        .title-container img {
+            width: 60px;
+            height: 60px;
+            vertical-align: middle;
+            margin-right: 10px;
         }
 
         .title {
@@ -63,11 +61,11 @@
         }
 
         @keyframes rainbow-text {
-            0% { color: #56CFE1; } /* Electric Aqua */
-            25% { color: #00B4D8; } /* Aqua Green */
-            50% { color: #0077B6; } /* Sea Blue */
-            75% { color: #00B4D8; }
-            100% { color: #56CFE1; }
+            0% { color: #64d0f1; }
+            25% { color: #4890e8; }
+            50% { color: #2320b3; }
+            75% { color: #4890e8; }
+            100% { color: #64d0f1; }
         }
 
         .link-placeholder {
@@ -98,8 +96,8 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background-color: #00B4D8; /* Aqua Green */
-            color: #FAF3DD; /* White Sand */
+            background-color: #4890e8;
+            color: #fff;
             padding: 10px 15px;
             border-radius: 50px;
             text-decoration: none;
@@ -120,36 +118,12 @@
             width: 20px;
             height: 20px;
         }
-        /* Dark Mode Toggle */
-        .dark-mode {
-            background-color: #00171F; /* Deep Navy */
-            color: #F1FAEE; /* Soft White */
-        }
 
-        /* Dark Mode Toggle Button */
-        .dark-mode-toggle {
-    position: absolute;
-    top: 60px; /* Adjusted from 10px to 60px to bring it below the navbar */
-    right: 20px;
-    background-color: #00B4D8; /* Aqua Green */
-    color: #FAF3DD; /* White Sand */
-    border: none;
-    border-radius: 20px;
-    padding: 10px;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.dark-mode-toggle:hover {
-    background-color: #0077B6; /* Sea Blue */
-}
     </style>
 </head>
 <body>
     <!-- Navigation Bar -->
     <nav class="navbar">
-        <div>
         <a href="#">User Profiles</a>
         <a href="jobBoard.html">Job Board</a>
         <a href="#">Learning Center</a>
@@ -158,14 +132,11 @@
         <a href="Dailytechnews.html">Daily Tech News</a>
         <a href="todolist.html">To-Do Lists</a>
         <a href="#">Content Sharing</a>
-        </div>
     </nav>
-    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
 
     <!-- Content Section -->
     <section>
         <div class="title-container">
-            <img src="https://i.postimg.cc/CKKfdnts/1.png" alt="SeaGro Logo" class="logo">
             <h1 class="title">SeaGro</h1>
         </div>
         <p>...........................................</p>
@@ -178,9 +149,6 @@
     </a>
 
     <script>
-        function toggleDarkMode() {
-            document.body.classList.toggle('dark-mode');
-        }
         // WebSocket connection URL (replace 'localhost' with your server's IP if not running locally)
         const socket = new WebSocket("ws://localhost:6789");
     
