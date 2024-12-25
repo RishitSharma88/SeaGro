@@ -1,9 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Content Sharing</title>
+{% extends 'layout.html' %}
+
+{% block title %}
+    Content Sharing
+{% endblock %}  
+
+{% block styles %}
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -155,9 +156,10 @@
             margin-top: 20px;
         }
     </style>
-</head>
-<body>
 
+{% endblock %}
+
+{% block content %}
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div>
@@ -221,5 +223,4 @@
         &copy; 2024 Content Sharing. All rights reserved.
     </footer>
 
-</body>
-</html>
+{% endblock %}
