@@ -1,0 +1,93 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    SeaGro Job Board
+{% endblock %}  
+
+{% block styles %}
+    <style>
+        /* Job Board Section */
+        .job-board {
+            padding: 50px 20px;
+            background-color: #f7f7f7;
+            text-align: center;
+        }
+
+        .job-board h2 {
+            color: #2320b3;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .job-listing {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin: 20px auto;
+            max-width: 800px;
+            padding: 20px;
+            text-align: left;
+        }
+
+        .job-listing h3 {
+            margin: 0 0 10px;
+            color: #2320b3;
+        }
+
+        .job-listing p {
+            margin: 5px 0;
+            font-size: 1rem;
+        }
+
+        .apply-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background-color: #4890e8;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .apply-btn:hover {
+            background-color: #2320b3;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+
+<section id="job-board" class="job-board">
+    <h2>Current Job Openings</h2>
+
+    <!-- Job Listing 1 -->
+    <div class="job-listing">
+        <h3>Front-End Developer</h3>
+        <p><strong>Location:</strong> Remote</p>
+        <p><strong>Company:</strong> SeaGro Tech Solutions</p>
+        <p><strong>Requirements:</strong> Proficiency in HTML, CSS, JavaScript, and React.</p>
+        <a href="#" class="apply-btn">Apply Now</a>
+    </div>
+
+    <!-- Job Listing 2 -->
+    <div class="job-listing">
+        <h3>Back-End Developer</h3>
+        <p><strong>Location:</strong> Hybrid (Caribbean HQ)</p>
+        <p><strong>Company:</strong> SeaGro Tech Solutions</p>
+        <p><strong>Requirements:</strong> Experience in Node.js, Express, and database management.</p>
+        <a href="#" class="apply-btn">Apply Now</a>
+    </div>
+
+    <!-- Job Listing 3 -->
+    <div class="job-listing">
+        <h3>UI/UX Designer</h3>
+        <p><strong>Location:</strong> On-Site</p>
+        <p><strong>Company:</strong> SeaGro Creative Studio</p>
+        <p><strong>Requirements:</strong> Experience in Figma, Adobe XD, and user testing.</p>
+        <a href="#" class="apply-btn">Apply Now</a>
+    </div>
+</section>
+
+{% endblock %}
+

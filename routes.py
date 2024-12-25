@@ -20,3 +20,11 @@ def community():
 @app.route('/todolist')
 def todolist():
     return render_template('todolist.html')
+
+@app.route('/bikesharing')
+def bikesharing():
+    return render_template('bikesharing.html')
+
+@app.route('/contentsharing')
+def contentsharing():
+    return render_template('contentsharing.html')

@@ -1,0 +1,73 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    SeaGro
+{% endblock %}  
+
+{% block styles %}
+<style>
+    /* Title Section */
+    .title-container {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    .title-container img.logo {
+        width: 150px;
+        height: auto;
+        display: block;
+        margin: 20px auto 10px auto;
+    }
+
+    .title {
+        font-size: 3rem;
+        font-weight: bold;
+        text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+        animation: rainbow-text 3s infinite;
+        display: inline-block;
+    }
+
+    @keyframes rainbow-text {
+        0% { color: #56CFE1; } /* Electric Aqua */
+        25% { color: #00B4D8; } /* Aqua Green */
+        50% { color: #0077B6; } /* Sea Blue */
+        75% { color: #00B4D8; }
+        100% { color: #56CFE1; }
+    }
+
+    .link-placeholder {
+        margin-top: 10px;
+        font-size: 1.2rem;
+        color: #4890e8;
+        text-decoration: underline;
+    }
+
+    section {
+        padding: 50px 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    section p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        line-height: 1.6;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Content Section -->
+<section>
+    <div class="title-container">
+        <img src="https://i.postimg.cc/CKKfdnts/1.png" alt="SeaGro Logo" class="logo">
+        <h1 class="title">SeaGro</h1>
+    </div>
+    <p>...........................................</p>
+</section>
+
+{% endblock %}
