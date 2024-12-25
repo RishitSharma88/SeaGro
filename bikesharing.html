@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bike Sharing</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F9F9F9;
+            color: #333;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #0077B6, #00B4D8);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #FFF;
+            font-weight: bold;
+            font-size: 1rem;
+            margin: 0 10px;
+            transition: color 0.3s ease;
+        }
+
+        .navbar a:hover {
+            color: #FFD166;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            padding: 50px 20px;
+            background: #CAF0F8;
+            color: #03045E;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+        }
+
+        /* Main Content */
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+            gap: 20px;
+        }
+
+        /* Bike Availability Section */
+        .bike-availability {
+            flex: 1 1 300px;
+            background: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .bike-availability h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .bike-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .bike-list li {
+            padding: 10px;
+            border-bottom: 1px solid #EEE;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .bike-list li:last-child {
+            border-bottom: none;
+        }
+
+        /* Map Section */
+        .map-container {
+            flex: 2 1 600px;
+            background: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .map-container h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .map {
+            width: 100%;
+            height: 400px;
+            background: #EEE;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+        }
+
+        /* Booking Form Section */
+        .booking-form {
+            flex: 1 1 300px;
+            background: #FFF;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+
+        .booking-form h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .booking-form input,
+        .booking-form select,
+        .booking-form button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+        }
+
+        .booking-form button {
+            background: #0077B6;
+            color: #FFF;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+        }
+
+        .booking-form button:hover {
+            background: #005F8E;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #0077B6;
+            color: #FFF;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div>
+            <a href="index.html">Home</a>
+            <a href="#">User Profiles</a>
+            <a href="#">Job Board</a>
+            <a href="#">Community</a>
+        </div>
+        <a href="#">Login</a>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="header">
+        <h1>Bike Sharing</h1>
+        <p>Find and book a bike near you with ease!</p>
+    </header>
+
+    <!-- Main Content -->
+    <div class="content">
+
+        <!-- Bike Availability Section -->
+        <div class="bike-availability">
+            <h2>Available Bikes</h2>
+            <ul class="bike-list">
+                <li><span>Station 1</span> <span>5 Bikes</span></li>
+                <li><span>Station 2</span> <span>3 Bikes</span></li>
+                <li><span>Station 3</span> <span>7 Bikes</span></li>
+                <li><span>Station 4</span> <span>2 Bikes</span></li>
+            </ul>
+        </div>
+
+        <!-- Map Section -->
+        <div class="map-container">
+            <h2>Bike Stations</h2>
+            <div class="map">Map Placeholder</div>
+        </div>
+
+        <!-- Booking Form Section -->
+        <div class="booking-form">
+            <h2>Book a Bike</h2>
+            <form>
+                <label for="station">Select Station:</label>
+                <select id="station">
+                    <option>Station 1</option>
+                    <option>Station 2</option>
+                    <option>Station 3</option>
+                    <option>Station 4</option>
+                </select>
+
+                <label for="duration">Duration (hours):</label>
+                <input type="number" id="duration" placeholder="Enter duration">
+
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" placeholder="Enter your name">
+
+                <button type="submit">Book Now</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 Bike Sharing. All rights reserved.
+    </footer>
+
+</body>
+</html>
