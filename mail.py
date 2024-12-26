@@ -4,14 +4,6 @@ from itsdangerous import URLSafeTimedSerializer
 from flask import url_for 
 from models import User
 
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'SeaGro.off@gmail.com'
-app.config['MAIL_PASSWORD'] = 'SeaGro@123'
-app.config['MAIL_DEFAULT_SENDER'] = 'SeaGro.off@gmail.com'
-
 mail = Mail(app)
 
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])

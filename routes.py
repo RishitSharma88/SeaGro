@@ -2,6 +2,11 @@ from flask import render_template, request, redirect, url_for, session
 from app import app
 from models import db, User
 from mail import send_reset_email
+import os
+import requests
+
+NEWS_API_KEY = os.getenv('NEWS_API_KEY')
+NEWS_API_URL = os.getenv('NEWS_API_URL')
 
 @app.route('/')
 def home():
@@ -13,7 +18,24 @@ def jobboard():
 
 @app.route('/tech_news')
 def tech_news():
-    return render_template('Dailytechnews.html')
+    params = {
+        'apikey': NEWS_API_KEY,
+        'category': 'technology',
+        'lang': 'en',
+        'max': 10,
+    }
+
+    # Fetch data from News API
+    response = requests.get(NEWS_API_URL, params=params)
+    news_data = response.json()
+
+    if news_data['totalArticles'] > 0:
+        articles = news_data['articles']
+
+    else:
+        articles = []
+
+    return render_template('Dailytechnews.html', articles=articles)
 
 @app.route('/community')
 def community():
@@ -59,14 +81,18 @@ def forgot_password():
 @app.route('/forgot_password', methods=['POST'])
 def forgot_password_post():
     email = request.form.get('email')
+
     # Check if the email exists in the database
     user = User.query.filter_by(email=email).first()
+
     if user:
         send_reset_email(user)
         #flash('A reset link has been sent to your email.', 'success')
+
     else:
         #flash('Email does not exist.', 'danger')
         return redirect(url_for('forgot_password'))
+    
     return redirect(url_for('login'))
 
 @app.route('/reset_password')
@@ -99,7 +125,6 @@ def create_account_post():
     
     name = fname + " " + lname
     new_user = User(name=name, username=username, password=password, email=email)
-    print(new_user)
     db.session.add(new_user)
     db.session.commit()
 

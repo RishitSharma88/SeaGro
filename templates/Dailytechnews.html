@@ -110,50 +110,27 @@
 
     <!-- News Articles -->
     <div class="news-container">
+        {% if articles %}
+            {% for article in articles %}
         <!-- Article 1 -->
-        <div class="news-article">
-            <div class="news-image">
-                <img src="https://media.licdn.com/dms/image/v2/D4E12AQGwcciyBKYmsw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1721173085414?e=2147483647&v=beta&t=IyCP50Fc4kdgCxXvaDqMQUrN4zgvi_0ng6y6tbtbDwc" alt="AI Revolution">
-            </div>
-            <div class="news-content">
-                <h2>The AI Revolution: Transforming Industries</h2>
-                <p>
-                    Artificial intelligence is rapidly changing the way we work, communicate, and live. From healthcare 
-                    to finance, discover how AI innovations are reshaping industries worldwide.
-                </p>
-                <a href="#">Read More</a>
-            </div>
-        </div>
+            <div class="news-article">
+                <div class="news-image">
+                    <img src="{{ article['image'] }}" alt="image">
+                </div>
+                <div class="news-content">
+                    <h2><a href="{{ article['url'] }}" target="_blank">{{ article['title'] }}</a></h2>
+                    <p>
+                        {{ article['description'] }}
+                        {{ article['content'].split(' [')[0] }}
+                    </p>
+                    <p>
+                        <p><small>Source: {{ article['source']['name'] }} | Published: {{ article['publishedAt'] }}</small></p>
 
-        <!-- Article 2 -->
-        <div class="news-article">
-            <div class="news-image">
-                <img src="https://i.ytimg.com/vi/8K89WzGgOrA/maxresdefault.jpg" alt="Tech Trends 2024">
+                    </p>
+                </div>
             </div>
-            <div class="news-content">
-                <h2>Top 5 Tech Trends to Watch in 2024</h2>
-                <p>
-                    The year 2024 is set to bring exciting advancements in technology. From quantum computing to 6G 
-                    networks, here's what you need to keep an eye on.
-                </p>
-                <a href="#">Read More</a>
-            </div>
-        </div>
-
-        <!-- Article 3 -->
-        <div class="news-article">
-            <div class="news-image">
-                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQffDGogjVdYpz1mIIsYLXSQnhng80lqQJoTg&s" alt="Space Exploration">
-            </div>
-            <div class="news-content">
-                <h2>Space Exploration: The New Frontier</h2>
-                <p>
-                    Private companies and government agencies are making giant leaps in space exploration. Find out 
-                    about the latest missions and what lies ahead in the race to explore the cosmos.
-                </p>
-                <a href="#">Read More</a>
-            </div>
-        </div>
+            {% endfor %}
+        {% endif %}
     </div>
 
     <!-- Footer -->
