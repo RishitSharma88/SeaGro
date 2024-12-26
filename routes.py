@@ -1,12 +1,15 @@
 from flask import render_template, request, redirect, url_for, session 
 from app import app
-from models import db, User
+from models import db, User, Course
 from mail import send_reset_email
 import os
 import requests
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 NEWS_API_URL = os.getenv('NEWS_API_URL')
+COURSE_API_URL = os.getenv('COURSE_API_URL')
+COURSE_API_KEY = os.getenv('COURSE_API_KEY')
+COURSE_API_HOST_HEADER = os.getenv('COURSE_API_HOST_HEADER')
 
 @app.route('/')
 def home():
@@ -36,6 +39,33 @@ def tech_news():
         articles = []
 
     return render_template('Dailytechnews.html', articles=articles)
+
+@app.route('/learning_centre')
+def learning_centre():
+    return render_template('learning_centre.html')
+
+@app.route('/learning_centre', methods=['POST'])
+def learning_centre_post():
+    query = Course.query
+
+    keyword = request.form.get('keyword')
+    price = request.form.get('price')
+    rating = request.form.get('rating')
+
+    filters = []
+
+    if keyword:
+        filters.append(Course.title.like(f"%{keyword}%"))
+    if price:
+        filters.append(Course.price <= price)
+    if rating: 
+        filters.append(Course.rating >= rating)
+
+    if filters:
+        query = query.filter(*filters)
+    
+    results = query.all()
+    return render_template('learning_centre.html', results=results)
 
 @app.route('/community')
 def community():
