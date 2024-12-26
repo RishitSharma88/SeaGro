@@ -1,5 +1,7 @@
 from flask import render_template, request, redirect, url_for, session 
 from app import app
+from models import db, User
+from mail import send_reset_email
 
 @app.route('/')
 def home():
@@ -9,8 +11,8 @@ def home():
 def jobboard():
     return render_template('jobBoard.html')
 
-@app.route('/technews')
-def technews():
+@app.route('/tech_news')
+def tech_news():
     return render_template('Dailytechnews.html')
 
 @app.route('/community')
@@ -21,10 +23,85 @@ def community():
 def todolist():
     return render_template('todolist.html')
 
-@app.route('/bikesharing')
-def bikesharing():
+@app.route('/bike_sharing')
+def bike_sharing():
     return render_template('bikesharing.html')
 
-@app.route('/contentsharing')
-def contentsharing():
+@app.route('/content_sharing')
+def content_sharing():
     return render_template('contentsharing.html')
+
+@app.route('/login')
+def login(): 
+    return render_template('login.html')
+
+@app.route('/login', methods=['POST'])
+def login_post(): 
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if not username or not password:
+        #flash('Please fill out all fields')
+        return redirect(url_for('login'))
+    
+    user = User.query.filter_by(username=username).first()
+
+    if not user or user.password != password:
+        #flash('Username not found')
+        return redirect(url_for('login'))
+    
+    return redirect(url_for('home'))
+
+@app.route('/forgot_password')
+def forgot_password():
+    return render_template('forgotpassword.html')
+
+@app.route('/forgot_password', methods=['POST'])
+def forgot_password_post():
+    email = request.form.get('email')
+    # Check if the email exists in the database
+    user = User.query.filter_by(email=email).first()
+    if user:
+        send_reset_email(user)
+        #flash('A reset link has been sent to your email.', 'success')
+    else:
+        #flash('Email does not exist.', 'danger')
+        return redirect(url_for('forgot_password'))
+    return redirect(url_for('login'))
+
+@app.route('/reset_password')
+def reset_password():
+    #Validate token post method after html page created
+    return render_template('reset_password') 
+
+@app.route('/create_account')
+def create_account():
+    return render_template('createaccount.html')
+
+@app.route('/create_account', methods=['POST'])
+def create_account_post():
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm-password')
+
+    if password != confirm_password:
+        #flash('Passwords do not match')
+        return redirect(url_for('create_account'))
+    
+    user = User.query.filter_by(username=username).first()
+
+    if user:
+        #flash('Username already exists')
+        return redirect(url_for('create_account'))
+    
+    name = fname + " " + lname
+    new_user = User(name=name, username=username, password=password, email=email)
+    print(new_user)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('login'))
+

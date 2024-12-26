@@ -120,20 +120,20 @@
                 <a href="{{ url_for('community') }}">Community</a>
             {% endif %}
             
-            {% if current_page != url_for('bikesharing') %}
-                <a href="{{ url_for('bikesharing') }}">Bike Sharing</a>
+            {% if current_page != url_for('bike_sharing') %}
+                <a href="{{ url_for('bike_sharing') }}">Bike Sharing</a>
             {% endif %}
             
-            {% if current_page != url_for('technews') %}
-                <a href="{{ url_for('technews') }}">Daily Tech News</a>
+            {% if current_page != url_for('tech_news') %}
+                <a href="{{ url_for('tech_news') }}">Daily Tech News</a>
             {% endif %}
             
             {% if current_page != url_for('todolist') %}
                 <a href="{{ url_for('todolist') }}">To-Do Lists</a>
             {% endif %}
             
-            {% if current_page != url_for('contentsharing') %}
-                <a href="{{ url_for('contentsharing') }}">Content Sharing</a>
+            {% if current_page != url_for('content_sharing') %}
+                <a href="{{ url_for('content_sharing') }}">Content Sharing</a>
             {% endif %}
         </div>
     </nav>
