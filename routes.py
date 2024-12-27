@@ -1,7 +1,7 @@
 from flask import render_template, request, redirect, url_for, session 
 from app import app
 from models import db, User, Course
-from mail import send_reset_email
+from mail import send_reset_email, verify_reset_token
 import os
 import requests
 
@@ -123,12 +123,32 @@ def forgot_password_post():
         #flash('Email does not exist.', 'danger')
         return redirect(url_for('forgot_password'))
     
-    return redirect(url_for('login'))
+    return redirect(url_for('reset_password'))
 
 @app.route('/reset_password')
 def reset_password():
+    return render_template('resetpassword.html') 
+
+
+@app.route('/reset_password/<token>', methods=['POST'])
+def reset_password_post(token):
     #Validate token post method after html page created
-    return render_template('reset_password') 
+    user = verify_reset_token(token)
+    if not user:
+        #flash('The reset link is invalid or has expired.', 'danger')
+        return redirect(url_for('forgot_password'))
+    new_password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if not new_password or new_password != confirm_password:
+        #flash('Passwords do not match or are invalid.', 'danger')
+        return render_template('resetpassword.html', token=token)
+    
+    user.password = new_password
+    db.session.commit()
+
+    #flash('Your password has been updated. You can now log in.', 'success')
+    return redirect(url_for('login'))
 
 @app.route('/create_account')
 def create_account():
