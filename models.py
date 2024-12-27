@@ -9,6 +9,7 @@ class User(db.Model):
     username = db.Column(db.String(64), nullable=False, unique=True)
     password = db.Column(db.String(256), nullable=False)
     email = db.Column(db.String(64), nullable=False, unique=True)
+    profile_pic = db.Column(db.String(32), default = 'default.jpeg')
 
 class Course(db.Model):
     id = db.Column(db.Integer, primary_key=True, nullable=False)

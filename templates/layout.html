@@ -112,6 +112,12 @@
                 <a href="{{ url_for('home') }}">Home Page</a>
             {% endif %}
             
+            {% if current_page != url_for('profile') %}
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('profile') }}">Profile</a>
+                {% endif %}
+            {% endif %}
+
             {% if current_page != url_for('jobboard') %}
                 <a href="{{ url_for('jobboard') }}">Job Board</a>
             {% endif %}
