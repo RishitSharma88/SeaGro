@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Password</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom left, #60979e, #050a30);
+            color: #FFFFFF;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background: linear-gradient(to bottom left, #de7a50, #81170d);
+            color: #ffff;
+            width: 250px;
+            height: 100%;
+            border-radius: 10px 0 0 10px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        .h {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .side-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .side-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .side-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .toggle-btn {
+            position: fixed;
+            top: 50%;
+            left: 250px; /* Start next to the sidebar */
+            transform: translateY(-50%);
+            background: #de7a50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-btn.collapsed {
+            left: 0; /* Stick to the left edge when sidebar is collapsed */
+        }
+
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 0;
+        }
+        .topbar{
+            background: linear-gradient(to bottom left, #de7a50, #81170d);
+            color: #fff;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1 class="h">Courses</h1>
+        <div class="side-links">
+            <a href="login.html">C Programming</a>
+            <a href="login.html">Python Programming</a>
+            <a href="login.html">Java Programming</a>
+        </div>
+    </div>
+    <button class="toggle-btn">&#9664;</button> <!-- Left arrow -->
+
+    <div class="main-content">
+        <h1>Welcome to the Course</h1>
+        <div class="topbar">
+            <a href="#">Filter</a>
+            <a href="#">Settings</a>
+        </div>
+        <p>This is the main content area.</p>
+    </div>
+
+    <script>
+        const sidebar = document.querySelector('.sidebar');
+        const toggleBtn = document.querySelector('.toggle-btn');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('collapsed');
+
+            // Change the arrow direction
+            toggleBtn.innerHTML = sidebar.classList.contains('collapsed') ? '&#9654;' : '&#9664;';
+        });
+    </script>
+</body>
+</html>

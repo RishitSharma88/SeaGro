@@ -46,7 +46,7 @@
             text-align: center;
             padding: 50px 20px;
             background: linear-gradient(to bottom left, #60979e, #050a30);
-            color: #ffffff;
+            color: #fefefe;
         }
 
         .header h1 {
@@ -184,7 +184,7 @@
             <a href="jobBoard.html">Job Board</a>
             <a href="community.html">Community</a>
         </div>
-        <a href="login.html">Login</a>
+        <a href="#">Login</a>
     </nav>
 
     <!-- Header Section -->
@@ -235,6 +235,58 @@
             </form>
         </div>
     </div>
+    <!-- Booking Form Section -->
+<div class="booking-form">
+    <h2>Book a Bike</h2>
+    <form id="bookingForm">
+        <label for="station">Select Station:</label>
+        <select id="station" required>
+            <option value="">--Select a Station--</option>
+            <option value="Station 1">Station 1</option>
+            <option value="Station 2">Station 2</option>
+            <option value="Station 3">Station 3</option>
+            <option value="Station 4">Station 4</option>
+        </select>
+
+        <label for="duration">Duration (hours):</label>
+        <input type="number" id="duration" placeholder="Enter duration" required min="1">
+
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" placeholder="Enter your name" required>
+
+        <button type="submit">Book Now</button>
+    </form>
+    <div id="confirmationMessage" style="display:none; margin-top:10px; color:green;"></div>
+</div>
+
+<script>
+document.getElementById('bookingForm').addEventListener('submit', function(event) {
+    event.preventDefault(); // Prevent default form submission
+
+    // Gather form data
+    const station = document.getElementById('station').value;
+    const duration = document.getElementById('duration').value;
+    const name = document.getElementById('name').value;
+
+    // Basic validation (if needed)
+    if (!station || !duration || !name) {
+        alert('Please fill in all fields.');
+        return;
+    }
+
+    // Simulate booking process (e.g., send data to a server)
+    // Here you would typically make an AJAX call to your backend
+
+    // Show confirmation message
+    const confirmationMessage = `Thank you, ${name}! You have successfully booked a bike at ${station} for ${duration} hour(s).`;
+    document.getElementById('confirmationMessage').innerText = confirmationMessage;
+    document.getElementById('confirmationMessage').style.display = 'block';
+
+    // Reset the form
+    document.getElementById('bookingForm').reset();
+});
+</script>
+
 
     <!-- Footer -->
     <footer>
