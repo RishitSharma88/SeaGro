@@ -5,32 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     <style>
-        /* General Styles */
         body {
             margin: 0;
             padding: 0;
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #48CAE4, #023E8A);
+            background: linear-gradient(to bottom left, #60979e, #050a30);
             color: #FFFFFF;
-            overflow: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
         }
 
-        .container {
-            background-color: #FFFFFF;
-            color: #03045E;
+        .main-container {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            background-color: transparent;
+        }
+
+        .img-container {
+            max-width: 500px;
+        }
+
+        .img-container img {
             width: 100%;
-            max-width: 400px;
-            border-radius: 10px;
+            height: auto;
+        }
+
+        .form-container {
+            display: flex;
+            gap: 20px;
+        }
+
+        .container1, .container2 {
+            background: linear-gradient(to bottom left, #60979e, #050a30);
+            color: #FFFFFF;
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             padding: 20px;
             box-sizing: border-box;
             animation: fadeIn 1s ease-in-out;
-            max-height: 80vh;
-            overflow-y: auto;
         }
 
         h1 {
@@ -101,7 +118,7 @@
             text-decoration: underline;
         }
 
-        /* Animation */
+        
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -113,46 +130,59 @@
             }
         }
 
-        /* Responsive Design */
+        
         @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-                max-height: 90vh;
+            body {
+                flex-direction: column;
             }
 
-            h1 {
-                font-size: 1.5em;
+            .form-container {
+                flex-direction: column;
+            }
+
+            .img-container {
+                margin-bottom: 20px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Create Account</h1>
-        <form method='post' id="create-account-form">
-            <label for="fname">First Name</label>
-            <input type="text" id="fname" name="fname" placeholder="Enter your first name" required>
-            
-            <label for="lname">Last Name</label>
-            <input type="text" id="lname" name="lname" placeholder="Enter your last name" required>
+    <div class="main-container">
+        <div class="img-container">
+            <img src="https://i.postimg.cc/kgsHnqnr/Screenshot-2024-12-26-at-11-17-03-PM-removebg.png" alt="Login Image">
+        </div>
+        <div class="form-container">
+            <div class="container1">
+                <h1>Create Account</h1>
+                <form method="post" id="create-account-form">
+                    <label for="fname">First Name</label>
+                    <input type="text" id="fname" name="fname" placeholder="Enter your first name" required>
+                    
+                    <label for="lname">Last Name</label>
+                    <input type="text" id="lname" name="lname" placeholder="Enter your last name" required>
 
-            <label for="username">Username</label>
-            <input type="text" id="username" name="username" placeholder="Enter username" required>
-            
-            <label for="email">Email Address</label>
-            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-            
-            <label for="password">Password</label>
-            <input type="password" id="password" name="password" placeholder="Create a password" required>
-            
-            <label for="confirm-password">Confirm Password</label>
-            <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
-            <div class="error" id="error-message"></div>
-            
-            <input type="submit" value="Create Account">
-        </form>
-        <div class="links">
-            <a href="{{ url_for('login') }}.html">Already have an account? Login</a>
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                    
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </form>
+            </div>
+            <div class="container2">
+                <form method="post" id="create-account-form">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    
+                    <label for="confirm-password">Confirm Password</label>
+                    <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password" required>
+                    
+                    <input type="submit" value="Create Account">
+                </form>
+                <div class="error" id="error-message"></div>
+                <div class="links">
+                    <a href="{{ url_for('login') }}.html">Already have an account? Login</a>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -164,10 +194,10 @@
 
         form.addEventListener('submit', function(event) {
             if (passwordField.value !== confirmPasswordField.value) {
-                event.preventDefault(); // Prevent form submission
+                event.preventDefault(); 
                 errorMessage.textContent = "Passwords do not match. Please try again.";
             } else {
-                errorMessage.textContent = ""; // Clear error message if passwords match
+                errorMessage.textContent = ""; 
             }
         });
     </script>

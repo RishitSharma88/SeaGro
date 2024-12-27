@@ -31,18 +31,12 @@
             top: 0;
             transition: transform 0.3s ease;
         }
-
-        .sidebar.collapsed {
-            transform: translateX(-250px);
-        }
-
         .h {
             font-size: 24px;
             font-weight: bold;
             text-align: center;
             margin: 20px 0;
         }
-
         .side-links {
             display: flex;
             flex-direction: column;
@@ -65,11 +59,25 @@
         .side-links a:hover {
             background-color: rgba(255, 255, 255, 0.2);
         }
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+
+        /*.sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        
+
+        
 
         .toggle-btn {
             position: fixed;
             top: 50%;
-            left: 250px; /* Start next to the sidebar */
+            left: 250px;
             transform: translateY(-50%);
             background: #de7a50;
             color: #fff;
@@ -81,19 +89,14 @@
         }
 
         .toggle-btn.collapsed {
-            left: 0; /* Stick to the left edge when sidebar is collapsed */
+            left: 0; 
         }
 
-        .main-content {
-            margin-left: 250px;
-            flex: 1;
-            padding: 20px;
-            transition: margin-left 0.3s ease;
-        }
+        
 
         .sidebar.collapsed + .main-content {
             margin-left: 0;
-        }
+        }*/
     </style>
 </head>
 <body>
@@ -105,14 +108,14 @@
             <a href="coursetemp.html">Java Programming</a>
         </div>
     </div>
-    <button class="toggle-btn">&#9664;</button> <!-- Left arrow -->
+    <!-- <button class="toggle-btn">&#9664;</button> -->
 
     <div class="main-content">
         <h1>Welcome to the Dashboard</h1>
         <p>This is the main content area.</p>
     </div>
 
-    <script>
+    <!-- <script> 
         const sidebar = document.querySelector('.sidebar');
         const toggleBtn = document.querySelector('.toggle-btn');
 
@@ -120,9 +123,9 @@
             sidebar.classList.toggle('collapsed');
             toggleBtn.classList.toggle('collapsed');
 
-            // Change the arrow direction
+            
             toggleBtn.innerHTML = sidebar.classList.contains('collapsed') ? '&#9654;' : '&#9664;';
         });
-    </script>
+    </script> -->
 </body>
 </html>
