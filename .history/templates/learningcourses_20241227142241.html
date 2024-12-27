@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create New Password</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom left, #60979e, #050a30);
+            color: #FFFFFF;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 100vh;
+        }
+        .filter_container{
+            background-color: #c0e9ef;
+            width:100%;
+            padding: 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: top;
+        }
+        .sidebar{
+            background: linear-gradient(to bottom left, #de7a50, #81170d);
+            color: #ffff;
+            width:25%;
+            height:100%;
+            border-radius: 10px 0 0 10px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
+        }
+        .h{
+            font-size: 50px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .sidebar .side-links {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    gap: 10px; /* Space between links */
+}
+
+.sidebar .side-links a {
+    text-decoration: none; /* Remove underline */
+    color: #fff; /* Text color */
+    font-size: 1rem; /* Font size */
+    font-weight: bold; /* Bold text */
+    padding: 10px; /* Add padding for better click area */
+    border-radius: 5px; /* Rounded corners for a button-like effect */
+    transition: background-color 0.3s ease; /* Smooth background transition */
+}
+
+.sidebar .side-links a:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Light background on hover */
+}
+.collapsible {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer; /* Change cursor to pointer */
+}
+
+.sidebar .side-links {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    gap: 10px; /* Space between links */
+}
+
+.sidebar .side-links.hidden {
+    display: none; /* Hide links when collapsed */
+}
+
+
+        </style>
+        <body>
+            <div class="sidebar">
+                <h1 class="h">Courses</h1>
+                <span class="arrow">&#9660;</span> <!-- Down arrow -->
+                <div class="side-links">
+                    <a href="login.html"><p>C Programming</p></a>
+                    <a href="login.html"><p>Python Programming</p></a>
+                    <a href="login.html"><p>Java Programming</p></a>
+                </div>
+            </div>
+        </body>
+
+        <script>
+            document.querySelector('.collapsible').addEventListener('click', function() {
+                const sideLinks = document.querySelector('.side-links');
+                const arrow = this.querySelector('.arrow');
+                
+                sideLinks.classList.toggle('hidden'); // Toggle visibility of links
+                arrow.innerHTML = sideLinks.classList.contains('hidden') ? '&#9654;' : '&#9660;'; // Change arrow direction
+            });
+        </script>
+        
+        
