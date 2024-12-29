@@ -62,31 +62,16 @@
     <h2>Current Job Openings</h2>
 
     <!-- Job Listing 1 -->
+    {% for job in jobs %}
     <div class="job-listing">
-        <h3>Front-End Developer</h3>
-        <p><strong>Location:</strong> Remote</p>
-        <p><strong>Company:</strong> SeaGro Tech Solutions</p>
-        <p><strong>Requirements:</strong> Proficiency in HTML, CSS, JavaScript, and React.</p>
-        <a href="#" class="apply-btn">Apply Now</a>
+        <h3>{{ job.title }}</h3>
+        <p><strong>Company: </strong>{{ job.organization }}</p>
+        <p><strong>Location: </strong> {{ job.address }}</p>
+        <p><strong>Date Posted: </strong> {{ job.date_posted }}</p>
+        <a href="{{ job['url'] }}" class="apply-btn">More Details</a>
     </div>
+    {% endfor %}
 
-    <!-- Job Listing 2 -->
-    <div class="job-listing">
-        <h3>Back-End Developer</h3>
-        <p><strong>Location:</strong> Hybrid (Caribbean HQ)</p>
-        <p><strong>Company:</strong> SeaGro Tech Solutions</p>
-        <p><strong>Requirements:</strong> Experience in Node.js, Express, and database management.</p>
-        <a href="#" class="apply-btn">Apply Now</a>
-    </div>
-
-    <!-- Job Listing 3 -->
-    <div class="job-listing">
-        <h3>UI/UX Designer</h3>
-        <p><strong>Location:</strong> On-Site</p>
-        <p><strong>Company:</strong> SeaGro Creative Studio</p>
-        <p><strong>Requirements:</strong> Experience in Figma, Adobe XD, and user testing.</p>
-        <a href="#" class="apply-btn">Apply Now</a>
-    </div>
 </section>
 
 {% endblock %}
