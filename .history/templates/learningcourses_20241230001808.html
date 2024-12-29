@@ -20,7 +20,7 @@
         .sidebar {
             background: linear-gradient(to bottom left, #af45a8, #320327);
             color: #ffff;
-            width: 20%;
+            width: 250px;
             height: 100%;
             border-radius: 10px 0 0 10px;
             overflow: auto;
@@ -72,7 +72,6 @@
 
         .typing {
             width: 0;
-            margin-top: 3.5%;
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid black;
@@ -226,7 +225,29 @@
             transform: scale(1.05);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
+
+        .filter-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            font-size: 18px;
+            background: linear-gradient(to bottom right, #4caf50, #3a8d42);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .filter-button:hover {
+            background: linear-gradient(to bottom right, #45a049, #2e7d32);
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
 
 
 
@@ -285,18 +306,15 @@
             background: linear-gradient(135deg, #0077B6, #00B4D8);
             display: flex;
             justify-content: space-around;
-            align-items: right;
+            align-items: center;
             padding: 10px 20px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
             position: absolute;
-            margin-left: 20%;
-<<<<<<< HEAD
-=======
-            width:80%;
->>>>>>> f6b8f4c (completed course frontend)
+            margin-left: 18%;
+            width:100%;
         }
 
         .navbar a {

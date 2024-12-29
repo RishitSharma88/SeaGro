@@ -20,7 +20,7 @@
         .sidebar {
             background: linear-gradient(to bottom left, #af45a8, #320327);
             color: #ffff;
-            width: 20%;
+            width: 250px;
             height: 100%;
             border-radius: 10px 0 0 10px;
             overflow: auto;
@@ -72,7 +72,6 @@
 
         .typing {
             width: 0;
-            margin-top: 3.5%;
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid black;
@@ -226,7 +225,29 @@
             transform: scale(1.05);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         }
-        
+
+
+        .filter-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px 25px;
+            font-size: 18px;
+            background: linear-gradient(to bottom right, #4caf50, #3a8d42);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .filter-button:hover {
+            background: linear-gradient(to bottom right, #45a049, #2e7d32);
+            transform: scale(1.1);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
 
 
 
@@ -279,24 +300,47 @@
                 transform: scale(1);
             }
         }
-        
+
+
+        .stars-container {
+            margin-top: 10px;
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+        }
+
+        .star-button {
+            padding: 5px 10px;
+            background: linear-gradient(to bottom right, #f9a825, #f57f17);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .star-button:hover {
+            background: linear-gradient(to bottom right, #f57f17, #ef6c00);
+            transform: scale(1.1);
+        }
+
+        .star-button.selected {
+            background: linear-gradient(to bottom right, #388e3c, #2e7d32);
+            /* Green */
+        }
 
         .navbar {
             background: linear-gradient(135deg, #0077B6, #00B4D8);
             display: flex;
             justify-content: space-around;
-            align-items: right;
+            align-items: center;
             padding: 10px 20px;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
             position: sticky;
             top: 0;
             z-index: 1000;
-            position: absolute;
-            margin-left: 20%;
-<<<<<<< HEAD
-=======
-            width:80%;
->>>>>>> f6b8f4c (completed course frontend)
+            position: fixed;
         }
 
         .navbar a {
@@ -340,28 +384,11 @@
         .rating{
             color:#1d97a7;
         }
-        .courseimage{
-            width:60%;
-            height:60%;
-            object-fit:cover;
-            margin-bottom:10px;
-            margin-top: 15px;
-        }
 
     </style>
 </head>
 
 <body>
-    
-    <div class="sidebar">
-        <h1 class="h">Courses</h1>
-        <div class="side-links">
-            <p>Discover courses to grow your skills and achieve your goals. Learn at your own pace with engaging and accessible content. Start your journey today!</p>
-        </div>
-        <img class="imgsidebar" src="https://i.postimg.cc/kgsHnqnr/Screenshot-2024-12-26-at-11-17-03-PM-removebg.png"
-            alt="Avatar">
-    </div>
-    <button class="toggle-btn">&#9664;</button>
     <nav class="navbar">
         <div>
             <a href="{{ url_for('home') }}">Home Page</a>
@@ -377,8 +404,19 @@
             <a href="{{ url_for('tech_news') }}">Daily Tech News</a>
 
             <a href="{{ url_for('todolist') }}">To-Do Lists</a>
+
+            <a href="{{ url_for('content_sharing') }}">Content Sharing</a>
         </div>
     </nav>
+    <div class="sidebar">
+        <h1 class="h">Courses</h1>
+        <div class="side-links">
+            <p>Discover courses to grow your skills and achieve your goals. Learn at your own pace with engaging and accessible content. Start your journey today!</p>
+        </div>
+        <img class="imgsidebar" src="https://i.postimg.cc/kgsHnqnr/Screenshot-2024-12-26-at-11-17-03-PM-removebg.png"
+            alt="Avatar">
+    </div>
+    <button class="toggle-btn">&#9664;</button>
 
 
     <div class="main-content">
@@ -389,12 +427,14 @@
                 <input type="search" name="query" placeholder="Search for a course..." value="{{ query }}">
                 <button type="submit" class="button">Search</button>
             </form>
+            <button class="filter-button">
+                Filter
+            </button>
         </div>
 
         <div class="course-list">
             {% for course in courses %}
             <div class="coursecontainer">
-                <img class = "courseimage" src="https://i.postimg.cc/kgsHnqnr/Screenshot-2024-12-26-at-11-17-03-PM-removebg.png" alt="Course Image">
                 <p>{{ course.name }}</p>
             </div>
             {% endfor %}
@@ -415,7 +455,38 @@
             </div>
         </div>
     </div>
-          
+
+
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>Filter Options</h2>
+
+            <form method="POST">
+                <!-- Hidden input to retain the search query -->
+                <input type="hidden" name="query" value="{{ query }}">
+
+                <label for="priceRange">Price Range (Rs):</label>
+                <input type="range" id="priceRange" name="priceRange" min="1000" max="10000" step="100"
+                    value="{{ max_price }}" oninput="updatePriceDisplay(this.value)">
+                <p>Selected Price: Rs <span id="priceDisplay">{{ max_price }}</span></p>
+
+                <div class="stars-container">
+                    <label>
+                        <input type="radio" name="sortBy" value="most_rated" {% if sort_by=='most_rated' %}checked{%
+                            endif %}>
+                        Most Rated
+                    </label>
+                    <label>
+                        <input type="radio" name="sortBy" value="newest" {% if sort_by=='newest' %}checked{% endif %}>
+                        Newest
+                    </label>
+                </div>
+                <p>Selected option: <span id="starDisplay">None</span></p>
+                <button type="submit" class="button">Submit</button>
+            </form>
+        </div>
+    </div>
     <div class="popupcourse" id="popup">
         <div class="popup-content">
             <span class="close" id="close">&times;</span>
@@ -436,9 +507,19 @@ By the end of the course, participants will be equipped to write effective C pro
 
 
 
-    <script>     
-       
-        document.querySelector('.course-list').addEventListener('click', function(){
+    <script>
+        const filterButton = document.querySelector('.filter-button');
+        const modal = document.getElementById('filterModal');
+        const closeButton = document.querySelector('.close-button');
+        const applyFilter = document.getElementById('applyFilter');
+        const priceDisplay = document.getElementById('priceDisplay');
+        const starButtons = document.querySelectorAll('.star-button');
+        const starDisplay = document.getElementById('starDisplay');
+        
+        
+
+        let selectedOption = null;
+        document.querySelectorAll('.coursecontainer').addEventListener('click', function(){
             document.getElementById('popup').style.display = 'block';
         });
 
@@ -452,6 +533,54 @@ By the end of the course, participants will be equipped to write effective C pro
                 popup.style.display = 'none';
             }
         });
+
+
+        filterButton.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+
+        closeButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        window.addEventListener('click', (event) => {
+            if (event.target === popupcourse) {
+                popupcourse.style.display = 'none';
+            }
+        });
+
+
+        function updatePriceDisplay(value) {
+            priceDisplay.textContent = value;
+        }
+
+
+        starButtons.forEach(button => {
+            button.addEventListener('click', () => {
+
+                starButtons.forEach(btn => btn.classList.remove('selected'));
+
+                button.classList.add('selected');
+
+                selectedOption = button.textContent;
+                starDisplay.textContent = selectedOption;
+            });
+        });
+
+
+        applyFilter.addEventListener('click', () => {
+            alert(`Filter Applied! Selected Price: Rs ${priceDisplay.textContent}, Option: ${selectedOption || "None"}`);
+            modal.style.display = 'none';
+        });
+
     </script>
 
 

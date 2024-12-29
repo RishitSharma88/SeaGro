@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% block title %}
+            Heading
+        {% endblock %}
+    </title>
+    <style>
+        body {
+            background: linear-gradient(to bottom left, #60979e, #050a30);
+            font-family: Arial, sans-serif;
+            color: #03045E; /* Deep Navy */
+            transition: background-color 0.5s ease;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: linear-gradient(135deg, #0077B6, #00B4D8);
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: #F8F9FA; /* Wave White */
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 10px 15px;
+            transition: color 0.3s ease, transform 0.2s ease;
+        }
+
+        .navbar a:hover {
+            color: #FFD166; /* Sand Yellow */
+            transform: scale(1.1);
+        }
+
+        /* Chat Icon Box */
+        .chat-box {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #00B4D8; /* Aqua Green */
+            color: #FAF3DD; /* White Sand */
+            padding: 10px 15px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .chat-box:hover {
+            background-color: #2320b3;
+            transform: scale(1.1);
+        }
+
+        .chat-box img {
+            width: 20px;
+            height: 20px;
+        }
+        /* Dark Mode Toggle */
+        .dark-mode {
+            background-color: #00171F; /* Deep Navy */
+            color: #F1FAEE; /* Soft White */
+        }
+
+        /* Dark Mode Toggle Button */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 60px; /* Adjusted from 10px to 60px to bring it below the navbar */
+            right: 20px;
+            background-color: #00B4D8; /* Aqua Green */
+            color: #FAF3DD; /* White Sand */
+            border: none;
+            border-radius: 20px;
+            padding: 10px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .dark-mode-toggle:hover {
+            background-color: #0077B6; /* Sea Blue */
+        }
+    </style>
+
+    {% block styles %}
+    {% endblock %}
+
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div>
+            {% set current_page = request.path %}
+            
+            {% if current_page != url_for('home') %}
+                <a href="{{ url_for('home') }}">Home Page</a>
+            {% endif %}
+            
+            {% if current_page != url_for('profile') %}
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('profile') }}">Profile</a>
+                {% endif %}
+            {% endif %}
+
+            {% if current_page != url_for('learning_course') %}
+                <a href="{{ url_for('learning_course') }}">Courses</a>
+            {% endif %}
+
+            {% if current_page != url_for('jobboard') %}
+                <a href="{{ url_for('jobboard') }}">Job Board</a>
+            {% endif %}
+            
+            {% if current_page != url_for('community') %}
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('community') }}">Community</a>
+                {% endif %}
+            {% endif %}
+            
+            {% if current_page != url_for('bike_sharing') %}
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('bike_sharing') }}">Bike Sharing</a>
+                {% endif %}
+            {% endif %}
+            
+            {% if current_page != url_for('tech_news') %}
+                <a href="{{ url_for('tech_news') }}">Daily Tech News</a>
+            {% endif %}
+            
+            {% if current_page != url_for('todolist') %}
+                {% if 'user_id' in session %}
+                <a href="{{ url_for('todolist') }}">To-Do Lists</a>
+                {% endif %}
+            {% endif %}
+
+            {% if current_page != url_for('login') %}
+                {% if 'user_id' not in session %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}
+            {% endif %}
+        </div>
+    </nav>
+    
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌙</button>
+
+    {% block content %}
+    {% endblock %}
+
+    <!-- Chat Icon Box -->
+    <a href="#chat" class="chat-box">
+        <img src="https://www.pngplay.com/wp-content/uploads/7/Chat-Icon-PNG-HD-Quality.png" alt="Chat Icon">
+        Chat with Us
+    </a>
+
+    <script>
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+        }
+        // WebSocket connection URL (replace 'localhost' with your server's IP if not running locally)
+        const socket = new WebSocket("ws://localhost:6789");
+    
+        // Elements
+        const chatButton = document.querySelector('.chat-box');
+        const chatWindow = document.createElement('div');
+        const chatInput = document.createElement('input');
+        const chatMessages = document.createElement('div');
+        const chatSendButton = document.createElement('button');
+    
+        // Chat window styling
+        chatWindow.style.position = 'fixed';
+        chatWindow.style.bottom = '80px';
+        chatWindow.style.right = '30px';
+        chatWindow.style.width = '300px';
+        chatWindow.style.height = '400px';
+        chatWindow.style.backgroundColor = '#fff';
+        chatWindow.style.boxShadow = '0 3px 8px rgba(0, 0, 0, 0.3)';
+        chatWindow.style.borderRadius = '10px';
+        chatWindow.style.display = 'none';
+        chatWindow.style.flexDirection = 'column';
+        chatWindow.style.padding = '10px';
+        chatWindow.style.zIndex = '1000';
+    
+        // Chat messages area styling
+        chatMessages.style.flex = '1';
+        chatMessages.style.overflowY = 'auto';
+        chatMessages.style.marginBottom = '10px';
+    
+        // Chat input styling
+        chatInput.type = 'text';
+        chatInput.placeholder = 'Type a message...';
+        chatInput.style.width = 'calc(100% - 50px)';
+        chatInput.style.marginRight = '5px';
+    
+        // Chat send button
+        chatSendButton.textContent = 'Send';
+        chatSendButton.style.width = '40px';
+    
+        // Add elements to chat window
+        chatWindow.appendChild(chatMessages);
+        const inputContainer = document.createElement('div');
+        inputContainer.style.display = 'flex';
+        inputContainer.appendChild(chatInput);
+        inputContainer.appendChild(chatSendButton);
+        chatWindow.appendChild(inputContainer);
+        document.body.appendChild(chatWindow);
+    
+        // Toggle chat window on button click
+        chatButton.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+        });
+    
+        // Handle WebSocket events
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
+    
+        socket.onmessage = (event) => {
+            const message = event.data;
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `Server: ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        };
+    
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
+    
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
+    
+        // Send message to server on button click
+        chatSendButton.addEventListener('click', () => {
+            const message = chatInput.value;
+            if (message.trim() !== '') {
+                socket.send(message);
+                const messageElement = document.createElement('div');
+                messageElement.textContent = `You: ${message}`;
+                messageElement.style.textAlign = 'right';
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+                chatInput.value = ''; // Clear input
+            }
+        });
+    
+        // Send message on Enter key press
+        chatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                chatSendButton.click();
+            }
+        });
+    </script>
+
+    {% block script %}
+            
+    {% endblock %}
+    
+</body>
+</html>
