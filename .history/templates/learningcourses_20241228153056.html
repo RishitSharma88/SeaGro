@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learning Courses</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom left, #60979e, #050a30);
+            color: #FFFFFF;
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .sidebar {
+            background: linear-gradient(to bottom left, #af45a8, #320327);
+            color: #ffff;
+            width: 250px;
+            height: 100%;
+            border-radius: 10px 0 0 10px;
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: fixed;
+            left: 0;
+            top: 0;
+            transition: transform 0.3s ease;
+        }
+        .h {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+        }
+        .side-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            width: 100%;
+            padding: 0 10px;
+        }
+
+        .side-links a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .side-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .main-content {
+            margin-left: 250px;
+            flex: 1;
+            padding: 20px;
+            transition: margin-left 0.3s ease;
+        }
+        .typing {
+            width: 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-right: 2px solid black;
+            animation: typing 2s steps(20) forwards, blink 1s step-end infinite;
+            
+        }
+        @keyframes typing {
+            from {
+                width: 0;
+            }
+            to {
+                width: 100%;
+            }
+        }
+
+        @keyframes blink {
+            50% {
+                border-color: transparent;
+            }
+        }
+        .highlight {
+            background: linear-gradient(to bottom left, #b243ab, #ae89ca); /* Gradient */
+            -webkit-background-clip: text;  /* Clip background to text */
+            -webkit-text-fill-color: transparent;  /* Make the non-highlight part transparent */
+        }
+
+        .expert {
+            background: linear-gradient(to bottom left, #1d97a7, #a2cdd8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .titlebox{
+            background-color:#1d97a7;
+            max-width: fit-content;
+            padding: 10px;
+            display: flex;
+            margin-left: 30px;
+            height:50px;
+        }
+
+        /*.sidebar.collapsed {
+            transform: translateX(-250px);
+        }
+
+        
+
+        
+
+        .toggle-btn {
+            position: fixed;
+            top: 50%;
+            left: 250px;
+            transform: translateY(-50%);
+            background: #de7a50;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 20px;
+            cursor: pointer;
+            transition: left 0.3s ease;
+        }
+
+        .toggle-btn.collapsed {
+            left: 0; 
+        }
+
+        
+
+        .sidebar.collapsed + .main-content {
+            margin-left: 0;
+        }*/
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h1 class="h">Courses</h1>
+        <div class="side-links">
+            <a href="coursetemp.html">C Programming</a>
+            <a href="coursetemp.html">Python Programming</a>
+            <a href="coursetemp.html">Java Programming</a>
+        </div>
+    </div>
+    <!-- <button class="toggle-btn">&#9664;</button> -->
+
+    <div class="titlebox">
+    <div class="main-content">
+        <h1 class="typing">
+            From <span class="highlight">beginner</span> to <span class="expert">expert</span>—unlock the power of programming
+        </h1>
+        <p>This is the main content area.</p>
+    </div>
+    </div>
+
+    <!-- <script> 
+        const sidebar = document.querySelector('.sidebar');
+        const toggleBtn = document.querySelector('.toggle-btn');
+
+        toggleBtn.addEventListener('click', () => {
+            sidebar.classList.toggle('collapsed');
+            toggleBtn.classList.toggle('collapsed');
+
+            
+            toggleBtn.innerHTML = sidebar.classList.contains('collapsed') ? '&#9654;' : '&#9664;';
+        });
+    </script> -->
+</body>
+</html>
