@@ -121,17 +121,21 @@
             {% if current_page != url_for('learning_course') %}
                 <a href="{{ url_for('learning_course') }}">Courses</a>
             {% endif %}
-            
+
             {% if current_page != url_for('jobboard') %}
                 <a href="{{ url_for('jobboard') }}">Job Board</a>
             {% endif %}
             
             {% if current_page != url_for('community') %}
+                {% if 'user_id' in session %}
                 <a href="{{ url_for('community') }}">Community</a>
+                {% endif %}
             {% endif %}
             
             {% if current_page != url_for('bike_sharing') %}
+                {% if 'user_id' in session %}
                 <a href="{{ url_for('bike_sharing') }}">Bike Sharing</a>
+                {% endif %}
             {% endif %}
             
             {% if current_page != url_for('tech_news') %}
@@ -139,11 +143,21 @@
             {% endif %}
             
             {% if current_page != url_for('todolist') %}
+                {% if 'user_id' in session %}
                 <a href="{{ url_for('todolist') }}">To-Do Lists</a>
+                {% endif %}
             {% endif %}
             
             {% if current_page != url_for('content_sharing') %}
+                {% if 'user_id' in session %}
                 <a href="{{ url_for('content_sharing') }}">Content Sharing</a>
+                {% endif %}
+            {% endif %}
+
+            {% if current_page != url_for('login') %}
+                {% if 'user_id' not in session %}
+                <a href="{{ url_for('login') }}">Login</a>
+                {% endif %}
             {% endif %}
         </div>
     </nav>
