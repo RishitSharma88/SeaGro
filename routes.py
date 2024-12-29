@@ -1,6 +1,6 @@
 from flask import render_template, request, redirect, url_for, session 
 from app import app
-from models import db, User, Course
+from models import db, User
 from mail import send_reset_email, verify_reset_token
 import os
 import requests
@@ -10,8 +10,6 @@ from datetime import datetime
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 NEWS_API_URL = os.getenv('NEWS_API_URL')
 COURSE_API_URL = os.getenv('COURSE_API_URL')
-COURSE_API_KEY = os.getenv('COURSE_API_KEY')
-COURSE_API_HOST_HEADER = os.getenv('COURSE_API_HOST_HEADER')
 JOBS_API_KEY = os.getenv('JOBS_API_KEY')
 JOBS_API_URL = os.getenv('JOBS_API_URL')
 JOBS_API_HOST_HEADER = os.getenv('JOBS_API_HOST_HEADER')
@@ -254,24 +252,24 @@ def upload_profile_pic():
 
 @app.route('/learning_course')
 def learning_course():
-    return render_template('learningcourses.html')
+    course_response = requests.get(COURSE_API_URL)
+
+    if course_response.status_code == 200:
+        courses = course_response.json() 
+        print(courses)
+    else:
+        courses = []
+    return render_template('learningcourses.html', courses = courses['results'])
 
 @app.route('/learning_course', methods=['POST'])
 def learning_course_post():
-    query = request.form.get('query', '')  
-    max_price = request.form.get('priceRange', 10000)  
-    sort_by = request.form.get('sortBy', None)  
+    query = request.form.get('query', '').lower()
+    course_response = requests.get(COURSE_API_URL)
+    courses = course_response.json() 
+    filtered_courses = []
 
-    courses = Course.query
-    if query:
-        courses = courses.filter(Course.title.like(f"%{query}%"))
-    if max_price:
-        courses = courses.filter(Course.price <= int(max_price))
-    if sort_by == 'most_rated':
-        courses = courses.order_by(Course.rating.desc())
-    elif sort_by == 'newest':
-        courses = courses.order_by(Course.id.desc())
+    for course in courses['results']:
+        if query in course['name'].lower():
+            filtered_courses.append(course)
 
-    courses = courses.all()
-
-    return render_template('learningcourses.html', courses=courses, query=query, max_price=max_price, sort_by=sort_by)
+    return render_template('learningcourses.html', courses = filtered_courses)
