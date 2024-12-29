@@ -1,56 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+{% extends 'layout.html' %}
 
+{% block title %}
+    Profile Page
+{% endblock %}
+
+{% block content %}
+<head>
     <style>
         body {
             background: linear-gradient(to bottom left, #60979e, #050a30);
             color:#fff;
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            height: 100vh;
-        }
-        .navbar {
-            background: linear-gradient(135deg, #0077B6, #00B4D8);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 10px 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .navbar a {
-            text-decoration: none;
-            color: #F8F9FA; /* Wave White */
-            font-weight: bold;
-            font-size: 1rem;
-            padding: 10px 15px;
-            transition: color 0.3s ease, transform 0.2s ease;
-        }
-
-        .navbar a:hover {
-            color: #FFD166; /* Sand Yellow */
-            transform: scale(1.1);
+            padding: 20px;
         }
         .container {
-        display: flex;
-        flex-wrap: nowrap; /* Prevent wrapping */
-        justify-content: space-between; /* Space between profile picture and user details */
-        align-items: right; /* Center items vertically */
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        margin-left: 100px;
-        margin-right: 100px; /* Add margin for spacing on the right */
-        }
+    display: flex;
+    flex-wrap: nowrap; /* Prevent wrapping */
+    justify-content: space-between; /* Space between profile picture and user details */
+    align-items: right; /* Center items vertically */
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 10px;
+    margin-left: 100px;
+    margin-right: 100px; /* Add margin for spacing on the right */
+}
 
 
 
@@ -64,8 +39,8 @@
         }
         .profile-pic {
             border-radius: 50%;
-            width: 200px;
-            height: 200px;
+            width: 150px;
+            height: 150px;
             object-fit: cover;
             margin-bottom: 20px;
             background-color:#fff
@@ -77,12 +52,10 @@
             padding: 10px 15px;
             border-radius: 5px;
             cursor: pointer;
-            text-align: center;
+            text-align: left;
             text-decoration: none;
-            width:70%;
+            width:60%;
             font-weight: bolder;
-            font-size:large;
-            height: 30%;
         }
         .btnedit{
             background-color: #007bff;
@@ -110,7 +83,7 @@
         padding: 20px;
         text-align: right; /* Ensure the text stays aligned to the left */
         align-items:right;
-        font-size:x-large;
+        font-size:xx-large;
         }
         .details h1 {
             margin-bottom: 20px;
@@ -164,65 +137,14 @@
             justify-content: space-between;
             margin-top: 20px;
         }
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #0077B6;
-            color: #FFF;
-            margin-top: 115px;
-        }
     </style>
 </head>
 <body>
-
-    <nav class="navbar">
-        <div>
-            {% set current_page = request.path %}
-            
-            {% if current_page != url_for('home') %}
-                <a href="{{ url_for('home') }}">Home Page</a>
-            {% endif %}
-            
-            {% if current_page != url_for('profile') %}
-                {% if 'user_id' in session %}
-                <a href="{{ url_for('profile') }}">Profile</a>
-                {% endif %}
-            {% endif %}
-
-            {% if current_page != url_for('learning_course') %}
-                <a href="{{ url_for('learning_course') }}">Courses</a>
-            {% endif %}
-            
-            {% if current_page != url_for('jobboard') %}
-                <a href="{{ url_for('jobboard') }}">Job Board</a>
-            {% endif %}
-            
-            {% if current_page != url_for('community') %}
-                <a href="{{ url_for('community') }}">Community</a>
-            {% endif %}
-            
-            {% if current_page != url_for('bike_sharing') %}
-                <a href="{{ url_for('bike_sharing') }}">Bike Sharing</a>
-            {% endif %}
-            
-            {% if current_page != url_for('tech_news') %}
-                <a href="{{ url_for('tech_news') }}">Daily Tech News</a>
-            {% endif %}
-            
-            {% if current_page != url_for('todolist') %}
-                <a href="{{ url_for('todolist') }}">To-Do Lists</a>
-            {% endif %}
-            
-            {% if current_page != url_for('content_sharing') %}
-                <a href="{{ url_for('content_sharing') }}">Content Sharing</a>
-            {% endif %}
-        </div>
-    </nav>
     
 
 <div class="container">
     <div class="profile-pic-container">
-        <img src="{{ url_for('static', filename='profile_pic/' + user.profile_pic) }}" class="profile-pic">
+        <img src="{{ url_for('static', filename='profile_pic/' + user.profile_pic) }}" alt="Profile Pic" class="profile-pic">
         <button type="button" class="btn" onclick="openModal('uploadModal')">Upload Profile Pic</button>
     </div>
 
@@ -280,9 +202,6 @@
         </div>
     </div>
 </div>
-<footer>
-    &copy; 2024 SeaGro. All rights reserved.
-</footer>
 </body>
 <script>
     function openModal(modalId) {
@@ -299,4 +218,5 @@
         }
     }
 </script>
-</html>
+
+{% endblock %}
