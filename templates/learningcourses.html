@@ -300,35 +300,7 @@
                 transform: scale(1);
             }
         }
-
-
-        .stars-container {
-            margin-top: 10px;
-            display: flex;
-            justify-content: space-around;
-            gap: 10px;
-        }
-
-        .star-button {
-            padding: 5px 10px;
-            background: linear-gradient(to bottom right, #f9a825, #f57f17);
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: transform 0.3s ease, background-color 0.3s ease;
-        }
-
-        .star-button:hover {
-            background: linear-gradient(to bottom right, #f57f17, #ef6c00);
-            transform: scale(1.1);
-        }
-
-        .star-button.selected {
-            background: linear-gradient(to bottom right, #388e3c, #2e7d32);
-            /* Green */
-        }
+        
 
         .navbar {
             background: linear-gradient(135deg, #0077B6, #00B4D8);
@@ -340,7 +312,8 @@
             position: sticky;
             top: 0;
             z-index: 1000;
-            position: fixed;
+            position: absolute;
+            margin-left: 20%;
         }
 
         .navbar a {
@@ -355,6 +328,41 @@
         .navbar a:hover {
             color: #FFD166; /* Sand Yellow */
             transform: scale(1.1);
+        }
+        .popupcourse{
+            background-color:rgba(0, 0, 0, 0.5);
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: fit-content;
+            height:fit-content;
+            display: none;
+            position: fixed;
+        }
+        .close{
+            color:#aaa;
+            float: right;
+            font-size: 28px;
+            cursor: pointer;
+        }
+        .popup-content{
+            background-color:white;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 60%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            color:#000;
+        }
+        .rating{
+            color:#1d97a7;
+        }
+        .courseimage{
+            width:60%;
+            height:60%;
+            object-fit:cover;
+            margin-bottom:10px;
+            margin-top: 15px;
         }
 
     </style>
@@ -376,8 +384,6 @@
             <a href="{{ url_for('tech_news') }}">Daily Tech News</a>
 
             <a href="{{ url_for('todolist') }}">To-Do Lists</a>
-
-            <a href="{{ url_for('content_sharing') }}">Content Sharing</a>
         </div>
     </nav>
     <div class="sidebar">
@@ -399,14 +405,12 @@
                 <input type="search" name="query" placeholder="Search for a course..." value="{{ query }}">
                 <button type="submit" class="button">Search</button>
             </form>
-            <button class="filter-button">
-                Filter
-            </button>
         </div>
 
         <div class="course-list">
             {% for course in courses %}
             <div class="coursecontainer">
+                <img class = "courseimage" src="https://i.postimg.cc/kgsHnqnr/Screenshot-2024-12-26-at-11-17-03-PM-removebg.png" alt="Course Image">
                 <p>{{ course.name }}</p>
             </div>
             {% endfor %}
@@ -427,94 +431,43 @@
             </div>
         </div>
     </div>
-
-
-    <div id="filterModal" class="modal">
-        <div class="modal-content">
-            <span class="close-button">&times;</span>
-            <h2>Filter Options</h2>
-
-            <form method="POST">
-                <!-- Hidden input to retain the search query -->
-                <input type="hidden" name="query" value="{{ query }}">
-
-                <label for="priceRange">Price Range (Rs):</label>
-                <input type="range" id="priceRange" name="priceRange" min="1000" max="10000" step="100"
-                    value="{{ max_price }}" oninput="updatePriceDisplay(this.value)">
-                <p>Selected Price: Rs <span id="priceDisplay">{{ max_price }}</span></p>
-
-                <div class="stars-container">
-                    <label>
-                        <input type="radio" name="sortBy" value="most_rated" {% if sort_by=='most_rated' %}checked{%
-                            endif %}>
-                        Most Rated
-                    </label>
-                    <label>
-                        <input type="radio" name="sortBy" value="newest" {% if sort_by=='newest' %}checked{% endif %}>
-                        Newest
-                    </label>
-                </div>
-                <p>Selected option: <span id="starDisplay">None</span></p>
-                <button type="submit" class="button">Submit</button>
-            </form>
+          
+    <div class="popupcourse" id="popup">
+        <div class="popup-content">
+            <span class="close" id="close">&times;</span>
+            <h2>Course details:</h2>
+        <p>
+            C programming is a foundational course designed for individuals looking to gain a solid understanding of the C language, which is widely recognized for its efficiency, portability, and flexibility. This course covers essential programming concepts including functions, data types, input/output operations, strings, operators, and control flow statements.
+Course Highlights:
+Introduction to C Language: Students will learn the basics of C programming, including compiling, linking, executing, and debugging programs.
+Core Topics: The curriculum includes arrays, pointers, expressions, and modular programming techniques that promote code efficiency and readability.
+Practical Applications: Assignments will involve writing non-trivial programs to reinforce learning and problem-solving skills.
+By the end of the course, participants will be equipped to write effective C programs and understand the language's role in various applications such as system software development and embedded systems. This course is suitable for beginners with little or no prior programming experience.
+        </p>
+        <h2 class="rating">Rating:5/5</h2>
         </div>
+        
     </div>
 
 
 
 
-    <script>
-        const filterButton = document.querySelector('.filter-button');
-        const modal = document.getElementById('filterModal');
-        const closeButton = document.querySelector('.close-button');
-        const applyFilter = document.getElementById('applyFilter');
-        const priceDisplay = document.getElementById('priceDisplay');
-        const starButtons = document.querySelectorAll('.star-button');
-        const starDisplay = document.getElementById('starDisplay');
-
-        let selectedOption = null;
-
-
-        filterButton.addEventListener('click', () => {
-            modal.style.display = 'flex';
+    <script>     
+       
+        document.querySelector('.course-list').addEventListener('click', function(){
+            document.getElementById('popup').style.display = 'block';
         });
 
-
-        closeButton.addEventListener('click', () => {
-            modal.style.display = 'none';
+        document.getElementById('close').addEventListener('click', function(){
+            document.getElementById('popup').style.display = 'none';
         });
 
-
-        window.addEventListener('click', (event) => {
-            if (event.target === modal) {
-                modal.style.display = 'none';
+        window.addEventListener('click', function(event){
+            const popup = document.getElementById('popup');
+            if (event.target === popup) {
+                popup.style.display = 'none';
             }
         });
-
-
-        function updatePriceDisplay(value) {
-            priceDisplay.textContent = value;
-        }
-
-
-        starButtons.forEach(button => {
-            button.addEventListener('click', () => {
-
-                starButtons.forEach(btn => btn.classList.remove('selected'));
-
-                button.classList.add('selected');
-
-                selectedOption = button.textContent;
-                starDisplay.textContent = selectedOption;
-            });
-        });
-
-
-        applyFilter.addEventListener('click', () => {
-            alert(`Filter Applied! Selected Price: Rs ${priceDisplay.textContent}, Option: ${selectedOption || "None"}`);
-            modal.style.display = 'none';
-        });
-
     </script>
 
 

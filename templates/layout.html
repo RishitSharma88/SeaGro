@@ -147,12 +147,6 @@
                 <a href="{{ url_for('todolist') }}">To-Do Lists</a>
                 {% endif %}
             {% endif %}
-            
-            {% if current_page != url_for('content_sharing') %}
-                {% if 'user_id' in session %}
-                <a href="{{ url_for('content_sharing') }}">Content Sharing</a>
-                {% endif %}
-            {% endif %}
 
             {% if current_page != url_for('login') %}
                 {% if 'user_id' not in session %}

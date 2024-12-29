@@ -99,11 +99,6 @@ def todolist():
 def bike_sharing():
     return render_template('bikesharing.html')
 
-@app.route('/content_sharing')
-@auth_required
-def content_sharing():
-    return render_template('contentsharing.html')
-
 @app.route('/login')
 def login(): 
     return render_template('login.html')
