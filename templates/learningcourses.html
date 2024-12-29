@@ -384,7 +384,7 @@
             <h1 class="typing"> From <span class="highlight">beginner</span> to <span class="expert">expert</span>—unlock the power of programming </h1>
             <div class="search-container">
                 <form method="post" class="search-form">
-                    <input type="search" name="query" placeholder="Search for a course...">
+                    <input type="search" name="query" placeholder="Search for a course..." value="{{ query }}">
                     <button type="submit" class="button">Search</button>
                 </form>
                 <button class="filter-button">
@@ -409,20 +409,27 @@
         <span class="close-button">&times;</span>
         <h2>Filter Options</h2>
 
+        <form method="POST">
+            <!-- Hidden input to retain the search query -->
+            <input type="hidden" name="query" value="{{ query }}">
         
-        <label for="priceRange">Price Range (Rs):</label>
-        <input type="range" id="priceRange" min="1000" max="10000" step="100" value="5500" oninput="updatePriceDisplay(this.value)">
-        <p>Selected Price: Rs <span id="priceDisplay">5500</span></p>
-
+            <label for="priceRange">Price Range (Rs):</label>
+            <input type="range" id="priceRange" name="priceRange" min="1000" max="10000" step="100" value="{{ max_price }}" oninput="updatePriceDisplay(this.value)">
+            <p>Selected Price: Rs <span id="priceDisplay">{{ max_price }}</span></p>
         
-        <div class="stars-container">
-            <button class="star-button" data-stars="1">Most rated</button>
-            <button class="star-button" data-stars="2">Newest</button>
-        </div>
-        <p>Selected option: <span id="starDisplay">None</span></p>
-
-        
-        <button id="applyFilter" class="button">Submit</button>
+            <div class="stars-container">
+                <label>
+                    <input type="radio" name="sortBy" value="most_rated" {% if sort_by == 'most_rated' %}checked{% endif %}>
+                    Most Rated
+                </label>
+                <label>
+                    <input type="radio" name="sortBy" value="newest" {% if sort_by == 'newest' %}checked{% endif %}>
+                    Newest
+                </label>
+            </div>
+            <p>Selected option: <span id="starDisplay">None</span></p>
+            <button type="submit" class="button">Submit</button>
+        </form>
     </div>
 </div>
 
