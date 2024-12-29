@@ -6,14 +6,18 @@
     <title>Profile</title>
 
     <style>
-        body {
-            background: linear-gradient(to bottom left, #60979e, #050a30);
-            color:#fff;
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-        }
+        html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background: linear-gradient(to bottom left, #60979e, #050a30);
+    color: #fff;
+    font-family: Arial, sans-serif;
+}
         .navbar {
             background: linear-gradient(135deg, #0077B6, #00B4D8);
             display: flex;
@@ -40,17 +44,19 @@
             transform: scale(1.1);
         }
         .container {
-        display: flex;
-        flex-wrap: nowrap; /* Prevent wrapping */
-        justify-content: space-between; /* Space between profile picture and user details */
-        align-items: right; /* Center items vertically */
-        margin-top: 20px;
-        margin-bottom: 20px;
-        padding: 20px;
-        border-radius: 10px;
-        margin-left: 100px;
-        margin-right: 100px; /* Add margin for spacing on the right */
+            flex: 1; /* This makes the container take up the remaining space */
+            display: flex;
+            flex-wrap: nowrap; /* Prevent wrapping */
+            justify-content: space-between; /* Space between profile picture and user details */
+            align-items: right; /* Center items vertically */
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            margin-left: 100px;
+            margin-right: 100px; /* Add margin for spacing on the right */
         }
+
 
 
 
@@ -169,7 +175,7 @@
             padding: 20px;
             background: #0077B6;
             color: #FFF;
-            margin-top: 115px;
+            position: relative;
         }
     </style>
 </head>
