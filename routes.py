@@ -42,33 +42,6 @@ def tech_news():
 
     return render_template('Dailytechnews.html', articles=articles)
 
-@app.route('/learning_centre')
-def learning_centre():
-    return render_template('learning_centre.html')
-
-@app.route('/learning_centre', methods=['POST'])
-def learning_centre_post():
-    query = Course.query
-
-    keyword = request.form.get('keyword')
-    price = request.form.get('price')
-    rating = request.form.get('rating')
-
-    filters = []
-
-    if keyword:
-        filters.append(Course.title.like(f"%{keyword}%"))
-    if price:
-        filters.append(Course.price <= price)
-    if rating: 
-        filters.append(Course.rating >= rating)
-
-    if filters:
-        query = query.filter(*filters)
-    
-    results = query.all()
-    return render_template('learning_centre.html', results=results)
-
 @app.route('/community')
 def community():
     return render_template('community.html')
@@ -167,6 +140,8 @@ def create_account_post():
     password = request.form.get('password')
     confirm_password = request.form.get('confirm-password')
 
+    print(fname)
+    print(lname)
     if password != confirm_password:
         #flash('Passwords do not match')
         return redirect(url_for('create_account'))
@@ -243,3 +218,27 @@ def upload_profile_pic():
     
     #flash('Invalid file format')
     return redirect(url_for('home'))
+
+@app.route('/learning_course')
+def learning_course():
+    return render_template('learningcourses.html')
+
+@app.route('/learning_course', methods=['POST'])
+def learning_course_post():
+    query = request.form.get('query', '')  
+    max_price = request.form.get('priceRange', 10000)  
+    sort_by = request.form.get('sortBy', None)  
+
+    courses = Course.query
+    if query:
+        courses = courses.filter(Course.title.like(f"%{query}%"))
+    if max_price:
+        courses = courses.filter(Course.price <= int(max_price))
+    if sort_by == 'most_rated':
+        courses = courses.order_by(Course.rating.desc())
+    elif sort_by == 'newest':
+        courses = courses.order_by(Course.id.desc())
+
+    courses = courses.all()
+
+    return render_template('learningcourses.html', courses=courses, query=query, max_price=max_price, sort_by=sort_by)
