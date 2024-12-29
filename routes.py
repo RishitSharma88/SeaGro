@@ -6,6 +6,7 @@ import os
 import requests
 from werkzeug.utils import secure_filename
 from datetime import datetime
+from functools import wraps
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 NEWS_API_URL = os.getenv('NEWS_API_URL')
@@ -13,6 +14,16 @@ COURSE_API_URL = os.getenv('COURSE_API_URL')
 JOBS_API_KEY = os.getenv('JOBS_API_KEY')
 JOBS_API_URL = os.getenv('JOBS_API_URL')
 JOBS_API_HOST_HEADER = os.getenv('JOBS_API_HOST_HEADER')
+
+def auth_required(func):
+    @wraps(func)
+    def inner(*args, **kwargs):
+        if 'user_id' in session:
+            return func(*args, **kwargs)
+        else:
+            #flash('Please login to continue')
+            return redirect(url_for('login'))
+    return inner
 
 @app.route('/')
 def home():
@@ -74,18 +85,22 @@ def tech_news():
     return render_template('Dailytechnews.html', articles=articles)
 
 @app.route('/community')
+@auth_required
 def community():
     return render_template('community.html')
 
 @app.route('/todolist')
+@auth_required
 def todolist():
     return render_template('todolist.html')
 
 @app.route('/bike_sharing')
+@auth_required
 def bike_sharing():
     return render_template('bikesharing.html')
 
 @app.route('/content_sharing')
+@auth_required
 def content_sharing():
     return render_template('contentsharing.html')
 
@@ -171,8 +186,6 @@ def create_account_post():
     password = request.form.get('password')
     confirm_password = request.form.get('confirm-password')
 
-    print(fname)
-    print(lname)
     if password != confirm_password:
         #flash('Passwords do not match')
         return redirect(url_for('create_account'))
@@ -191,12 +204,14 @@ def create_account_post():
     return redirect(url_for('login'))
 
 @app.route('/profile')
+@auth_required
 def profile():
     user_id = session['user_id']
     user = User.query.get(user_id)
     return render_template('profile.html', user=user)
     
 @app.route('/profile', methods = ['POST'])
+@auth_required
 def profile_influencer_post():
     id = request.form.get('id')
     username = request.form.get('username')
@@ -222,6 +237,7 @@ def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS'] 
 
 @app.route('/upload_profile_pic', methods=['POST'])
+@auth_required
 def upload_profile_pic():
     if 'profile_pic' not in request.files:
         #flash('No file part')
