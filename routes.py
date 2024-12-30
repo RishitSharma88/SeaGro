@@ -7,7 +7,6 @@ import requests
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from functools import wraps
-import json
 from urllib.parse import urljoin
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
@@ -40,9 +39,6 @@ def fetch_all_courses():
         if course_response.status_code == 200:
             response_data = course_response.json()
 
-            # Debug the entire response to check for issues
-            print(f"Response for page {count}: {json.dumps(response_data, indent=2)}")
-
             courses.extend(response_data.get('results', []))  # Safely get results
             next_url = response_data.get('pagination', {}).get('next')
 
@@ -58,7 +54,103 @@ def fetch_all_courses():
     print(f"Total courses fetched: {len(courses)}")
     return courses
 
+@app.route('/login')
+def login(): 
+    return render_template('login.html')
 
+@app.route('/login', methods=['POST'])
+def login_post(): 
+    username = request.form.get('username')
+    password = request.form.get('password')
+
+    if not username or not password:
+        #flash('Please fill out all fields')
+        return redirect(url_for('login'))
+    
+    user = User.query.filter_by(username=username).first()
+
+    if not user or user.password != password:
+        #flash('Username not found')
+        return redirect(url_for('login'))
+    
+    session['user_id'] = user.id
+    
+    return redirect(url_for('home'))
+
+@app.route('/forgot_password')
+def forgot_password():
+    return render_template('forgotpassword.html')
+
+@app.route('/forgot_password', methods=['POST'])
+def forgot_password_post():
+    email = request.form.get('email')
+
+    # Check if the email exists in the database
+    user = User.query.filter_by(email=email).first()
+
+    if user:
+        send_reset_email(user)
+        #flash('A reset link has been sent to your email.', 'success')
+
+    else:
+        #flash('Email does not exist.', 'danger')
+        return redirect(url_for('forgot_password'))
+    
+    return redirect(url_for('reset_password'))
+
+@app.route('/reset_password')
+def reset_password():
+    return render_template('resetpassword.html') 
+
+@app.route('/reset_password/<token>', methods=['POST'])
+def reset_password_post(token):
+    #Validate token post method after html page created
+    user = verify_reset_token(token)
+    if not user:
+        #flash('The reset link is invalid or has expired.', 'danger')
+        return redirect(url_for('forgot_password'))
+    new_password = request.form.get('password')
+    confirm_password = request.form.get('confirm_password')
+
+    if not new_password or new_password != confirm_password:
+        #flash('Passwords do not match or are invalid.', 'danger')
+        return render_template('resetpassword.html', token=token)
+    
+    user.password = new_password
+    db.session.commit()
+
+    #flash('Your password has been updated. You can now log in.', 'success')
+    return redirect(url_for('login'))
+
+@app.route('/create_account')
+def create_account():
+    return render_template('createaccount.html')
+
+@app.route('/create_account', methods=['POST'])
+def create_account_post():
+    fname = request.form.get('fname')
+    lname = request.form.get('lname')
+    username = request.form.get('username')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    confirm_password = request.form.get('confirm-password')
+
+    if password != confirm_password:
+        #flash('Passwords do not match')
+        return redirect(url_for('create_account'))
+    
+    user = User.query.filter_by(username=username).first()
+
+    if user:
+        #flash('Username already exists')
+        return redirect(url_for('create_account'))
+    
+    name = fname + " " + lname
+    new_user = User(name=name, username=username, password=password, email=email)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return redirect(url_for('login'))
 
 @app.route('/')
 def home():
@@ -119,10 +211,29 @@ def tech_news():
 
     return render_template('Dailytechnews.html', articles=articles)
 
+@app.route('/learning_course')
+def learning_course():
+    courses = fetch_all_courses()
+    return render_template('learningcourses.html', courses = courses)
+
+@app.route('/learning_course', methods=['POST'])
+def learning_course_post():
+    query = request.form.get('query', '').lower()
+    courses = fetch_all_courses()
+    filtered_courses = []
+
+    for course in courses['results']:
+        if query in course['name'].lower():
+            filtered_courses.append(course)
+
+    return render_template('learningcourses.html', courses = filtered_courses)
+
 @app.route('/community')
 @auth_required
 def community():
-    return render_template('community.html')
+    user_id = session['user_id']
+    user = User.query.get(user_id)
+    return render_template('community.html', user=user)
 
 @app.route('/todolist')
 @auth_required
@@ -134,105 +245,6 @@ def todolist():
 def bike_sharing():
     return render_template('bikesharing.html')
 
-@app.route('/login')
-def login(): 
-    return render_template('login.html')
-
-@app.route('/login', methods=['POST'])
-def login_post(): 
-    username = request.form.get('username')
-    password = request.form.get('password')
-
-    if not username or not password:
-        #flash('Please fill out all fields')
-        return redirect(url_for('login'))
-    
-    user = User.query.filter_by(username=username).first()
-
-    if not user or user.password != password:
-        #flash('Username not found')
-        return redirect(url_for('login'))
-    
-    session['user_id'] = user.id
-    
-    return redirect(url_for('home'))
-
-@app.route('/forgot_password')
-def forgot_password():
-    return render_template('forgotpassword.html')
-
-@app.route('/forgot_password', methods=['POST'])
-def forgot_password_post():
-    email = request.form.get('email')
-
-    # Check if the email exists in the database
-    user = User.query.filter_by(email=email).first()
-
-    if user:
-        send_reset_email(user)
-        #flash('A reset link has been sent to your email.', 'success')
-
-    else:
-        #flash('Email does not exist.', 'danger')
-        return redirect(url_for('forgot_password'))
-    
-    return redirect(url_for('reset_password'))
-
-@app.route('/reset_password')
-def reset_password():
-    return render_template('resetpassword.html') 
-
-
-@app.route('/reset_password/<token>', methods=['POST'])
-def reset_password_post(token):
-    #Validate token post method after html page created
-    user = verify_reset_token(token)
-    if not user:
-        #flash('The reset link is invalid or has expired.', 'danger')
-        return redirect(url_for('forgot_password'))
-    new_password = request.form.get('password')
-    confirm_password = request.form.get('confirm_password')
-
-    if not new_password or new_password != confirm_password:
-        #flash('Passwords do not match or are invalid.', 'danger')
-        return render_template('resetpassword.html', token=token)
-    
-    user.password = new_password
-    db.session.commit()
-
-    #flash('Your password has been updated. You can now log in.', 'success')
-    return redirect(url_for('login'))
-
-@app.route('/create_account')
-def create_account():
-    return render_template('createaccount.html')
-
-@app.route('/create_account', methods=['POST'])
-def create_account_post():
-    fname = request.form.get('fname')
-    lname = request.form.get('lname')
-    username = request.form.get('username')
-    email = request.form.get('email')
-    password = request.form.get('password')
-    confirm_password = request.form.get('confirm-password')
-
-    if password != confirm_password:
-        #flash('Passwords do not match')
-        return redirect(url_for('create_account'))
-    
-    user = User.query.filter_by(username=username).first()
-
-    if user:
-        #flash('Username already exists')
-        return redirect(url_for('create_account'))
-    
-    name = fname + " " + lname
-    new_user = User(name=name, username=username, password=password, email=email)
-    db.session.add(new_user)
-    db.session.commit()
-
-    return redirect(url_for('login'))
-
 @app.route('/profile')
 @auth_required
 def profile():
@@ -242,7 +254,7 @@ def profile():
     
 @app.route('/profile', methods = ['POST'])
 @auth_required
-def profile_influencer_post():
+def profile_post():
     id = request.form.get('id')
     username = request.form.get('username')
     email = request.form.get('email')
@@ -295,20 +307,3 @@ def upload_profile_pic():
     
     #flash('Invalid file format')
     return redirect(url_for('home'))
-
-@app.route('/learning_course')
-def learning_course():
-    courses = fetch_all_courses()
-    return render_template('learningcourses.html', courses = courses)
-
-@app.route('/learning_course', methods=['POST'])
-def learning_course_post():
-    query = request.form.get('query', '').lower()
-    courses = fetch_all_courses()
-    filtered_courses = []
-
-    for course in courses['results']:
-        if query in course['name'].lower():
-            filtered_courses.append(course)
-
-    return render_template('learningcourses.html', courses = filtered_courses)
