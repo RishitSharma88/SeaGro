@@ -59,35 +59,33 @@
         }
 
         .content {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    justify-content: center; /* Center cards vertically */
-    align-items: center; /* Center cards horizontally */
-}
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            justify-content: center; /* Center cards vertically */
+            align-items: center; /* Center cards horizontally */
+        }
 
-.community-card {
-    background-image: linear-gradient(to right, rgb(71, 69, 238), rgb(100, 208, 241));
-    color: #fff;
-    padding: 20px;
-    max-height: 150px;
-    overflow: visible;
-    border-radius: 12px; /* More rounded corners */
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-    width: calc(70% - 20px); /* Adjusted for margin */
-    margin: 10px auto; /* Center cards */
-}
+        .community-card {
+            background-image: linear-gradient(to right, rgb(71, 69, 238), rgb(100, 208, 241));
+            color: #fff;
+            padding: 20px;
+            max-height: 150px;
+            overflow: visible;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            width: calc(70% - 20px); /* Adjusted for margin */
+            margin: 10px auto; /* Center cards */
+        }
 
-.community-card:hover {
-    transform: translateY(-5px);
-}
-
-
+        .community-card:hover {
+            transform: translateY(-5px);
+        }
 
         .content.hidden {
             display: none;
@@ -157,87 +155,75 @@
         cursor: pointer;
         padding: 5px 10px;
         z-index: 1001;
-    }
+        }
 
-    .side-toggle.left {
-        left: -12px; /* Position toggle button outside the left container */
-    }
+        .side-toggle.left {
+            left: -12px; /* Position toggle button outside the left container */
+        }
 
-    .side-toggle.right {
-        right: -12px; /* Position toggle button outside the right container */
-    }
+        .side-toggle.right {
+            right: -12px; /* Position toggle button outside the right container */
+        }
 
-    .collapsed {
-        width: 0;
-        padding: 0;
-        overflow: hidden;
-    }
-    /* Modal Styling */
-    .modal {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background-color: #fff;
-        padding: 20px;
-        border-radius: 8px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-        z-index: 2000;
-        display: none;
-        width: 80%;
-        max-width: 400px;
-    }
-
-    .modal-content {
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-    }
-
-    .modal-content input,
-    .modal-content textarea {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-    }
-
-    .modal-content button {
-        padding: 10px;
-        background-color: rgb(71, 69, 238);
-        color: #fff;
-        border: none;
-        border-radius: 4px;
-        font-size: 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    .modal-content button:hover {
-        background-color: rgb(100, 208, 241);
-    }
-
-    .hidden {
-        display: none;
-    }
-
-    .close-btn {
-        align-self: flex-end;
-        cursor: pointer;
-        font-size: 1.5rem;
-        color: #666;
-    }
-    #post-popup {
-            display: none;
+        .collapsed {
+            width: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        /* Modal Styling */
+        .modal {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            border: 1px solid #ccc;
+            background-color: #fff;
             padding: 20px;
-            background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            display: none;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .modal-content input,
+        .modal-content textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .modal-content button {
+            padding: 10px;
+            background-color: rgb(71, 69, 238);
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .modal-content button:hover {
+            background-color: rgb(100, 208, 241);
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .close-btn {
+            align-self: flex-end;
+            cursor: pointer;
+            font-size: 1.5rem;
+            color: #666;
         }
 
         #posts-container {
@@ -257,10 +243,11 @@
         }
 
         .post-meta {
-    font-size: 0.9em;
-    color: #555;
-    text-align: right; /* Align text to the right */
-}
+            font-size: 0.9em;
+            color: #555;
+            text-align: right;
+            display: block !important; 
+        }
 
 
         .post-content {
@@ -268,94 +255,59 @@
             color: #333;
         }
 
-    /* Posts Container Styling */
-    .posts-container {
-        margin-top: 20px;
-        max-height: 400px;
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-        max-height: 70vh; /* Limit height of posts container */
-        overflow-y: auto;
-    }
-    .post {
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    .post-meta {
-        font-size: 0.9em;
-        color: #555;
-        margin-bottom: 5px;
-    }
+        .post {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .post-meta {
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 5px;
+        }
 
-    .post-content {
-        font-size: 1em;
-        color: #333;
-    }
+        .post-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
 
-    .post-card {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        padding: 15px;
-        border-radius: 4px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    }
+        @media (max-width: 768px) {
+            .leftcontainer, .rightcontainer {
+                width: 100%; /* Make it full width on small screens */
+                position: relative;
+                height: auto;
+            }
+        }
+        .container::after {
+            content: '';
+            display: block;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 5px;
+            background: linear-gradient(to right, #ddd, #aaa);
+            border-radius: 2.5px;
+            opacity: 0.5;
+        }
+        .join-btn {
+            background-color: #fff;
+            color: rgb(71, 69, 238);
+            padding: 10px 15px; /* Increased padding */
+            border-radius: 20px; /* Rounded button */
+            border: none;
+            font-size: 1rem; /* Slightly larger text */
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
-    .post-card .post-title {
-        font-size: 1.2rem;
-        font-weight: bold;
-        margin-bottom: 10px;
-    }
-
-    .post-card .post-content {
-        font-size: 1rem;
-        color: #555;
-    }
-    @media (max-width: 768px) {
-    .leftcontainer, .rightcontainer {
-        width: 100%; /* Make it full width on small screens */
-        position: relative;
-        height: auto;
-    }
-}
-.container::after {
-    content: '';
-    display: block;
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 50px;
-    height: 5px;
-    background: linear-gradient(to right, #ddd, #aaa);
-    border-radius: 2.5px;
-    opacity: 0.5;
-}
-.join-btn {
-    background-color: #fff;
-    color: rgb(71, 69, 238);
-    padding: 10px 15px; /* Increased padding */
-    border-radius: 20px; /* Rounded button */
-    border: none;
-    font-size: 1rem; /* Slightly larger text */
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.join-btn:hover {
-    background-color: rgb(100, 208, 241);
-    color: #fff;
-}
-
-.datetime{
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 10px;
-}
-
-
+        .join-btn:hover {
+            background-color: rgb(100, 208, 241);
+            color: #fff;
+        }
 
 </style>
 
@@ -412,60 +364,54 @@
         <h2>Welcome to SeaGro Communities</h2>
         <p>Select a community to see its details or join to participate.</p>
     </div>
-    <!-- Popup Modal -->
-<!-- Modal for Creating a Post -->
-<div id="create-post-modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close-btn" onclick="togglePostModal()">×</span>
-        <h2>Create Post</h2>
-        <label for="modal-post-title">Title:</label>
-        <input type="text" id="modal-post-title" placeholder="Enter post title">
-        <label for="modal-post-content">Content:</label>
-        <textarea id="modal-post-content" placeholder="Write your post here"></textarea>
-        <button id="post-button" onclick="submitPost()">Post</button>
-    </div>
-</div>
 
-
-<div id="post-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1002; justify-content: center; align-items: center;">
-    <div style="background-color: #fff; padding: 20px; border-radius: 8px; width: 400px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
-        <h2>Create Post</h2>
-        <div class="toolbar" style="display: flex; gap: 10px; margin-bottom: 10px;">
-            <button onclick="applyFormat('bold')" style="padding: 5px 10px; border: none; background-color: rgb(71, 69, 238); color: white; border-radius: 4px; cursor: pointer;">B</button>
-            <button onclick="applyFormat('italic')" style="padding: 5px 10px; border: none; background-color: rgb(71, 69, 238); color: white; border-radius: 4px; cursor: pointer;"><i>I</i></button>
-            <input type="color" id="text-color-picker" onchange="applyColor(this.value)" style="cursor: pointer;" />
-        </div>
-        <div id="post-title" contenteditable="true" placeholder="Post Title" 
-            style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; min-height: 40px;"></div>
-        <div id="post-content" contenteditable="true" placeholder="Post Content" 
-            style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; overflow-y: auto;"></div>
-        <div style="text-align: right;">
-            <button id="close-modal" style="background-color: #ccc; padding: 8px 12px; border: none; border-radius: 4px; margin-right: 10px;">Cancel</button>
-            <button id="submit-post" style="background-color: rgb(71, 69, 238); color: #fff; padding: 8px 12px; border: none; border-radius: 4px;">Post</button>
+    <!-- Modal for Creating a Post -->
+    <div id="create-post-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="togglePostModal()">×</span>
+            <h2>Create Post</h2>
+            <label for="modal-post-title">Title:</label>
+            <input type="text" id="modal-post-title" placeholder="Enter post title">
+            <label for="modal-post-content">Content:</label>
+            <textarea id="modal-post-content" placeholder="Write your post here"></textarea>
+            <button id="post-button" onclick="submitPost()">Post</button>
         </div>
     </div>
-</div>
 
-<div id="posts-container" style="margin-top: 20px; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
-    <h2>Posts</h2>
-    <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
+
+    <div id="post-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1002; justify-content: center; align-items: center;">
+        <div style="background-color: #fff; padding: 20px; border-radius: 8px; width: 400px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
+            <h2>Create Post</h2>
+
+            <div class="toolbar" style="display: flex; gap: 10px; margin-bottom: 10px;">
+                <button onclick="applyFormat('bold')" style="padding: 5px 10px; border: none; background-color: rgb(71, 69, 238); color: white; border-radius: 4px; cursor: pointer;">B</button>
+                <button onclick="applyFormat('italic')" style="padding: 5px 10px; border: none; background-color: rgb(71, 69, 238); color: white; border-radius: 4px; cursor: pointer;"><i>I</i></button>
+                <input type="color" id="text-color-picker" onchange="applyColor(this.value)" style="cursor: pointer;" />
+            </div>
+            <label>Enter Post Title</label>
+            <div id="post-title" contenteditable="true" placeholder="Post Title" 
+                style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; min-height: 40px;"></div>
+
+            <label>Enter Post Content</label>
+            <div id="post-content" contenteditable="true" placeholder="Post Content" 
+                style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; overflow-y: auto;"></div>
+
+            <div style="text-align: right;">
+                <button id="close-modal" style="background-color: #ccc; padding: 8px 12px; border: none; border-radius: 4px; margin-right: 10px;" onclick="closePopup()">Cancel</button>
+                <button id="submit-post" style="background-color: rgb(71, 69, 238); color: #fff; padding: 8px 12px; border: none; border-radius: 4px;" onclick="addPost()">Post</button>
+            </div>
+        </div>
     </div>
-</div>
-<button id="create-post-button"></button>
-    <div id="post-popup">
-        <h3>Create Post</h3>
-        <textarea id="post-title" placeholder="Write your post here..." rows="5" cols="30"></textarea><br>
-        <button onclick="addPost()">Submit Post</button>
-        <button onclick="closePopup()">Close</button>
+
+    <div id="posts-container" style="margin-top: 20px; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
+        <h2>Posts</h2>
+        <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
+        </div>
     </div>
-
-    <div id="posts-container"></div>
-
 
 {% endblock %}
 
 {% block script %}
-
 <script>
             const now = new Date();
             const formattedDate = now.toLocaleDateString();
@@ -542,63 +488,9 @@
         modal.classList.toggle('hidden');
     }
 
-    const postPopup = document.getElementById('post-popup');
-        const createPostButton = document.getElementById('create-post-button');
-
-        createPostButton.addEventListener('click', () => {
-            postPopup.style.display = 'block';
-        });
-
-        function closePopup() {
-            postPopup.style.display = 'none';
-        }
-
-        function addPost() {
-    const postTitle = document.getElementById('post-title').value;
-    if (!postTitle.trim()) {
-        alert('Post title cannot be empty!');
-        return;
+    function closePopup() {
+        postPopup.style.display = 'none';
     }
-
-    const postsContainer = document.getElementById('posts-container');
-
-    // Create a new post container
-    const newPost = document.createElement('div');
-    newPost.classList.add('post');
-
-    // Get current date and time
-    const now = new Date();
-    const formattedDateTime = now.toLocaleString(); // Format as needed
-
-    // Create meta info for date and time
-    const metaInfo = document.createElement('div');
-    metaInfo.classList.add('post-meta');
-    metaInfo.textContent = formattedDateTime; // Set the date and time
-
-    // Add post content
-    const postContent = document.createElement('div');
-    postContent.classList.add('post-content');
-    postContent.innerHTML = postTitle;
-
-    // Append meta info and content to the post container
-    newPost.appendChild(metaInfo);
-    newPost.appendChild(postContent);
-
-    // Append new post to the posts container
-    postsContainer.appendChild(newPost);
-
-    // Clear the input field
-    document.getElementById('post-title').value = '';
-
-    // Scroll to the bottom of the posts container
-    postsContainer.scrollTop = postsContainer.scrollHeight;
-
-    // Close the popup after posting (if applicable)
-    closePopup();
-}
-
-
-
 
     // Add event listener for Create Post Button
     document.addEventListener('click', function (event) {
@@ -627,52 +519,13 @@
         document.getElementById('post-modal').style.display = 'none';
     });
 
-    document.getElementById('submit-post').addEventListener('click', () => {
-        // Get trimmed values of title and content
-        const title = document.getElementById('post-title').value.trim();
-        const content = document.getElementById('post-content').value.trim();
-
-        // Debugging: Log values to the console
-        console.log('Title:', title);
-        console.log('Content:', content);
-
-        // Validation: Check if either field is empty
-        if (title === '' || content === '') {
-            alert('Please fill out both title and content fields.');
-            return;
-        }
-
-        // Create a post container
-        const postContainer = document.createElement('div');
-        postContainer.style = `
-            background-color: #f4f4f4;
-            padding: 15px;
-            margin: 15px 0;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-        `;
-        postContainer.innerHTML = `
-            <h3>${title}</h3>
-            <p>${content}</p>
-        `;
-
-        // Append to the center content
-        document.getElementById('center-content').appendChild(postContainer);
-
-        // Clear modal fields and hide modal
-        document.getElementById('post-title').value = '';
-        document.getElementById('post-content').value = '';
-        document.getElementById('post-modal').style.display = 'none';
-
-        // Debugging: Confirm post creation
-        console.log('Post created successfully');
-    });
     // Ensure the container height matches the viewport
-window.addEventListener('resize', () => {
-    document.querySelectorAll('.container').forEach(container => {
-        container.style.height = `${window.innerHeight}px`;
+    window.addEventListener('resize', () => {
+        document.querySelectorAll('.container').forEach(container => {
+            container.style.height = `${window.innerHeight}px`;
+        });
     });
-});
+
     // Variables to track active styles
     let isBold = false;
     let isItalic = false;
@@ -700,59 +553,61 @@ window.addEventListener('resize', () => {
         textArea.style.color = currentColor;
     }
 
-function formatText(command) {
-    document.execCommand(command, false, null);
-}
-
-function changeTextColor(color) {
-    document.execCommand('foreColor', false, color);
-}
-function applyFormat(command) {
-    document.execCommand(command, false, null);
-}
-
-function applyColor(color) {
-    document.execCommand('foreColor', false, color);
-}
-
-document.getElementById('submit-post').addEventListener('click', () => {
-    const postTitle = document.getElementById('post-title').innerHTML.trim();
-    const postContent = document.getElementById('post-content').innerHTML.trim();
-
-    if (postTitle === '' || postContent === '') {
-        alert('Both title and content are required!');
-        return;
+    function formatText(command) {
+        document.execCommand(command, false, null);
     }
 
-    const postsContainer = document.getElementById('posts');
-    const newPost = document.createElement('div');
-    newPost.style.padding = '10px';
-    newPost.style.border = '1px solid #ccc';
-    newPost.style.borderRadius = '4px';
-    newPost.style.backgroundColor = '#fff';
+    function changeTextColor(color) {
+        document.execCommand('foreColor', false, color);
+    }
 
-    newPost.innerHTML = `
-        <h3 style="margin: 0 0 10px;">${postTitle}</h3>
-        <div>${postContent}</div>
-    `;
+    function applyFormat(command) {
+        document.execCommand(command, false, null);
+    }
 
-    postsContainer.appendChild(newPost);
+    function applyColor(color) {
+        document.execCommand('foreColor', false, color);
+    }
 
-    // Clear and hide modal
-    document.getElementById('post-title').innerHTML = '';
-    document.getElementById('post-content').innerHTML = '';
-    document.getElementById('post-modal').style.display = 'none';
-});
+    document.getElementById('submit-post').addEventListener('click', () => {
+        const postTitle = document.getElementById('post-title').innerHTML.trim();
+        const postContent = document.getElementById('post-content').innerHTML.trim();
 
-document.getElementById('close-modal').addEventListener('click', () => {
-    document.getElementById('post-title').innerHTML = '';
-    document.getElementById('post-content').innerHTML = '';
-    document.getElementById('post-modal').style.display = 'none';
-});
+        if (postTitle === '' || postContent === '') {
+            alert('Both title and content are required!');
+            return;
+        }
 
+        const postsContainer = document.getElementById('posts');
+        const newPost = document.createElement('div');
+        newPost.style.padding = '10px';
+        newPost.style.border = '1px solid #ccc';
+        newPost.style.borderRadius = '4px';
+        newPost.style.backgroundColor = '#fff';
 
+        // Get current date and time
+        const now = new Date();
+        const formattedDateTime = now.toLocaleString(); // Format as needed
 
+        newPost.innerHTML = `
+            <h3 style="margin: 0 0 10px;">${postTitle}</h3>
+            <div>${formattedDateTime}</div>
+            <div>${postContent}</div>
+        `;
 
+        postsContainer.appendChild(newPost);
+
+        // Clear and hide modal
+        document.getElementById('post-title').innerHTML = '';
+        document.getElementById('post-content').innerHTML = '';
+        document.getElementById('post-modal').style.display = 'none';
+    });
+
+    document.getElementById('close-modal').addEventListener('click', () => {
+        document.getElementById('post-title').innerHTML = '';
+        document.getElementById('post-content').innerHTML = '';
+        document.getElementById('post-modal').style.display = 'none';
+    });
 
 </script>
     
