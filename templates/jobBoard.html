@@ -26,7 +26,9 @@
             margin: 20px auto;
             max-width: 800px;
             padding: 20px;
-            text-align: left;
+            display: flex;
+            align-items: center; 
+            justify-content: space-between;
         }
 
         .job-listing h3 {
@@ -53,6 +55,26 @@
         .apply-btn:hover {
             background-color: #2320b3;
         }
+
+        .job_logo-container {
+            flex: 0 0 25%;
+            display: flex;
+            justify-content: left;
+        }
+
+        .job_logo {
+            width: 60%; 
+            height: 60%;
+            object-fit: cover;
+        }
+
+        .job-text {
+            flex: 0 0 70%; 
+            padding: 0 20px;
+            text-align: right; /* Ensure the text stays aligned to the left */
+            align-items:right;
+        }
+
     </style>
 {% endblock %}
 
@@ -64,11 +86,15 @@
     <!-- Job Listing 1 -->
     {% for job in jobs %}
     <div class="job-listing">
-        <h3>{{ job.title }}</h3>
-        <p><strong>Company: </strong>{{ job.organization }}</p>
-        <p><strong>Location: </strong> {{ job.address }}</p>
-        <p><strong>Date Posted: </strong> {{ job.date_posted }}</p>
-        <a href="{{ job['url'] }}" class="apply-btn">More Details</a>
+        <div class="job-logo-container">
+            <img src="{{ job.company.logo }}" class="job_logo" alt="company-logo">
+        </div>
+        <div class="job-text">
+            <h3>{{ job.title }}</h3>
+            <p><strong>Company: </strong>{{ job.company.name }}</p>
+            <p><strong>Location: </strong> {{ job.location }}</p>
+            <a href="{{ job['url'] }}" class="apply-btn">More Details</a>
+        </div>
     </div>
     {% endfor %}
 
