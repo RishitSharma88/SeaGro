@@ -73,6 +73,7 @@
         .typing {
             width: 0;
             margin-top: 3.5%;
+            text-align: center;
             overflow: hidden;
             white-space: nowrap;
             border-right: 2px solid black;
@@ -390,26 +391,11 @@
 
         <div class="course-list">
             {% for course in courses %}
-            <div class="coursecontainer">
-                <img class = "courseimage" src="https://i.postimg.cc/kgsHnqnr/Screenshot-2024-12-26-at-11-17-03-PM-removebg.png" alt="Course Image">
+            <div class="coursecontainer" data-course-desc="{{ course.short_description}}" data-course-og="{{ course.org }}" data-course-pacing="{{ course.pacing }}" data-course-effort="{{ course.effort }}">
+                <img class = "courseimage" src="https://courses.edx.org{{ course.media.course_image.uri }}" alt="Course Image">
                 <p>{{ course.name }}</p>
             </div>
             {% endfor %}
-            <div class="coursecontainer">
-                <p>Python Programming</p>
-            </div>
-            <div class="coursecontainer">
-                <p>Java Programming</p>
-            </div>
-            <div class="coursecontainer">
-                <p>Web Development</p>
-            </div>
-            <div class="coursecontainer">
-                <p>Machine Learning</p>
-            </div>
-            <div class="coursecontainer">
-                <p>Data Science</p>
-            </div>
         </div>
     </div>
           
@@ -417,27 +403,35 @@
         <div class="popup-content">
             <span class="close" id="close">&times;</span>
             <h2>Course details:</h2>
-        <p>
-            C programming is a foundational course designed for individuals looking to gain a solid understanding of the C language, which is widely recognized for its efficiency, portability, and flexibility. This course covers essential programming concepts including functions, data types, input/output operations, strings, operators, and control flow statements.
-Course Highlights:
-Introduction to C Language: Students will learn the basics of C programming, including compiling, linking, executing, and debugging programs.
-Core Topics: The curriculum includes arrays, pointers, expressions, and modular programming techniques that promote code efficiency and readability.
-Practical Applications: Assignments will involve writing non-trivial programs to reinforce learning and problem-solving skills.
-By the end of the course, participants will be equipped to write effective C programs and understand the language's role in various applications such as system software development and embedded systems. This course is suitable for beginners with little or no prior programming experience.
-        </p>
+            <p id="desc"></p>
+            <p id="org"></p>
+            <p id="pacing"></p>
+            <p id="effort"></p>
         <h2 class="rating">Rating:5/5</h2>
         </div>
         
     </div>
 
-
-
-
     <script>     
        
-        document.querySelector('.course-list').addEventListener('click', function(){
+       document.querySelectorAll('.coursecontainer').forEach(course => {
+        course.addEventListener('click', function () {
+            // Get the course description from the data attribute
+            const desc = this.getAttribute('data-course-desc');
+            const org = this.getAttribute('data-course-org');
+            const pacing = this.getAttribute('data-course-pacing');
+            const effort = this.getAttribute('data-course-effort');
+
+            // Set the course description in the popup
+            document.getElementById('desc').textContent = "Description: " + desc;
+            document.getElementById('org').textContent = "Organisation: " + org;
+            document.getElementById('pacing').textContent = "Pacing: " + pacing;
+            document.getElementById('effort').textContent = "Effort: " + effort;
+
+            // Show the popup
             document.getElementById('popup').style.display = 'block';
         });
+    });
 
         document.getElementById('close').addEventListener('click', function(){
             document.getElementById('popup').style.display = 'none';

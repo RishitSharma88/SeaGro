@@ -7,6 +7,8 @@ import requests
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from functools import wraps
+import json
+from urllib.parse import urljoin
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
 NEWS_API_URL = os.getenv('NEWS_API_URL')
@@ -24,6 +26,39 @@ def auth_required(func):
             #flash('Please login to continue')
             return redirect(url_for('login'))
     return inner
+
+def fetch_all_courses():
+
+    courses = []
+    next_url = COURSE_API_URL  # Start with the base URL
+    count = 0
+
+    while next_url and count != 2:
+        print(f"Fetching page {count}: {next_url}")
+        course_response = requests.get(next_url)
+
+        if course_response.status_code == 200:
+            response_data = course_response.json()
+
+            # Debug the entire response to check for issues
+            print(f"Response for page {count}: {json.dumps(response_data, indent=2)}")
+
+            courses.extend(response_data.get('results', []))  # Safely get results
+            next_url = response_data.get('pagination', {}).get('next')
+
+            # Handle relative URLs
+            if next_url and not next_url.startswith('http'):
+                next_url = urljoin(COURSE_API_URL, next_url)
+
+            count += 1
+        else:
+            print(f"Error: {course_response.status_code}")
+            break  # Exit on error
+
+    print(f"Total courses fetched: {len(courses)}")
+    return courses
+
+
 
 @app.route('/')
 def home():
@@ -263,20 +298,13 @@ def upload_profile_pic():
 
 @app.route('/learning_course')
 def learning_course():
-    course_response = requests.get(COURSE_API_URL)
-
-    if course_response.status_code == 200:
-        courses = course_response.json() 
-        print(courses)
-    else:
-        courses = []
-    return render_template('learningcourses.html', courses = courses['results'])
+    courses = fetch_all_courses()
+    return render_template('learningcourses.html', courses = courses)
 
 @app.route('/learning_course', methods=['POST'])
 def learning_course_post():
     query = request.form.get('query', '').lower()
-    course_response = requests.get(COURSE_API_URL)
-    courses = course_response.json() 
+    courses = fetch_all_courses()
     filtered_courses = []
 
     for course in courses['results']:
