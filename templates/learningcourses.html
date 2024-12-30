@@ -395,7 +395,7 @@
 
         <div class="course-list">
             {% for course in courses %}
-            <div class="coursecontainer" data-course-desc="{{ course.short_description}}" data-course-og="{{ course.org }}" data-course-pacing="{{ course.pacing }}" data-course-effort="{{ course.effort }}">
+            <div class="coursecontainer" data-vid="{{ course.media.course_video.uri }}" data-course-desc="{{ course.short_description}}" data-course-og="{{ course.org }}" data-course-pacing="{{ course.pacing }}" data-course-effort="{{ course.effort }}">
                 <img class = "courseimage" src="https://courses.edx.org{{ course.media.course_image.uri }}" alt="Course Image">
                 <p>{{ course.name }}</p>
             </div>
@@ -407,7 +407,7 @@
         <div class="popup-content">
             <span class="close" id="close">&times;</span>
             <h2>Course details:</h2>
-            <iframe class="vidframe" src="https://www.youtube.com/embed/nu_pCVPKzTk?si=g_bRV-7bJoWlOktu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+            <iframe id="vidframe" class="vidframe" src="https://www.youtube.com/embed/nu_pCVPKzTk?si=g_bRV-7bJoWlOktu" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
 
             </iframe>
             <p id="desc"></p>
@@ -424,18 +424,23 @@
        document.querySelectorAll('.coursecontainer').forEach(course => {
         course.addEventListener('click', function () {
           
+            const vid = this.getAttribute('data-vid')
             const desc = this.getAttribute('data-course-desc');
             const org = this.getAttribute('data-course-org');
             const pacing = this.getAttribute('data-course-pacing');
             const effort = this.getAttribute('data-course-effort');
 
-            
             document.getElementById('desc').textContent = "Description: " + desc;
             document.getElementById('org').textContent = "Organisation: " + org;
             document.getElementById('pacing').textContent = "Pacing: " + pacing;
             document.getElementById('effort').textContent = "Effort: " + effort;
 
-           
+            const videoId = vid.split('v=')[1].split('&')[0]; // Extracts "V36LpHqtcDY" from the URL
+
+            // Set the iframe src to the correct embed URL
+            const vidframe = document.getElementById('vidframe');
+            vidframe.src = `https://www.youtube.com/embed/${videoId}`;
+
             document.getElementById('popup').style.display = 'block';
         });
     });
