@@ -166,8 +166,11 @@ def jobboard():
     }
 
     response = requests.get(url, headers=headers)
+    print(f"Status Code: {response.status_code}")
+    print(f"Response Text: {response.text}") 
     if response.status_code == 200:
         jobs = response.json()
+         
     else:
         jobs = []
 
