@@ -257,11 +257,10 @@
         }
 
         .post-meta {
-    font-size: 0.9em;
-    color: #555;
-    text-align: right; /* Align text to the right */
-}
-
+            font-size: 0.9em;
+            color: #555;
+            margin-bottom: 5px;
+        }
 
         .post-content {
             font-size: 1em;
@@ -449,6 +448,7 @@
 <div id="posts-container" style="margin-top: 20px; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
     <h2>Posts</h2>
     <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
+        <p class="datetime" id="datetime"></p>
     </div>
 </div>
 <button id="create-post-button"></button>
@@ -554,50 +554,52 @@
         }
 
         function addPost() {
-    const postTitle = document.getElementById('post-title').value;
-    if (!postTitle.trim()) {
-        alert('Post title cannot be empty!');
-        return;
-    }
+            const postTitle = document.getElementById('post-title').value;
+            
+            if (!postTitle.trim()) {
+                alert('Post title cannot be empty!');
+                return;
+            }
 
-    const postsContainer = document.getElementById('posts-container');
+            const postsContainer = document.getElementById('posts-container');
 
-    // Create a new post container
-    const newPost = document.createElement('div');
-    newPost.classList.add('post');
+            // Create a new post container
+            const newPost = document.createElement('div');
+            newPost.classList.add('post');
 
-    // Get current date and time
-    const now = new Date();
-    const formattedDateTime = now.toLocaleString(); // Format as needed
+            // Get current date and time
+            
 
-    // Create meta info for date and time
-    const metaInfo = document.createElement('div');
-    metaInfo.classList.add('post-meta');
-    metaInfo.textContent = formattedDateTime; // Set the date and time
+            function displayDateTime() {
+            
+            document.getElementById('datetime').textContent = `${formattedDate} ${formattedTime}`;
+        }
 
-    // Add post content
-    const postContent = document.createElement('div');
-    postContent.classList.add('post-content');
-    postContent.innerHTML = postTitle;
+        // Update the date and time immediately and every second
+        displayDateTime();
+        setInterval(displayDateTime, 1000);
 
-    // Append meta info and content to the post container
-    newPost.appendChild(metaInfo);
-    newPost.appendChild(postContent);
+            // Add post content
+            const postContent = document.createElement('div');
+            postContent.classList.add('post-content');
+            postContent.innerHTML = postTitle;
 
-    // Append new post to the posts container
-    postsContainer.appendChild(newPost);
+            // Append meta info and content to the post container
+            newPost.appendChild(metaInfo);
+            newPost.appendChild(postContent);
 
-    // Clear the input field
-    document.getElementById('post-title').value = '';
+            // Append new post to the posts container
+            postsContainer.appendChild(newPost);
 
-    // Scroll to the bottom of the posts container
-    postsContainer.scrollTop = postsContainer.scrollHeight;
+            // Clear the input field
+            document.getElementById('post-title').value = '';
 
-    // Close the popup after posting (if applicable)
-    closePopup();
-}
+            // Scroll to the bottom of the posts container
+            postsContainer.scrollTop = postsContainer.scrollHeight;
 
-
+            // Close the popup after posting
+            closePopup();
+        }
 
 
     // Add event listener for Create Post Button

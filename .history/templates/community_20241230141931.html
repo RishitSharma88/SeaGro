@@ -227,73 +227,15 @@
         font-size: 1.5rem;
         color: #666;
     }
-    #post-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid #ccc;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        #posts-container {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        .post {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .post-meta {
-    font-size: 0.9em;
-    color: #555;
-    text-align: right; /* Align text to the right */
-}
-
-
-        .post-content {
-            font-size: 1em;
-            color: #333;
-        }
 
     /* Posts Container Styling */
     .posts-container {
         margin-top: 20px;
-        max-height: 400px;
         display: flex;
         flex-direction: column;
         gap: 10px;
         max-height: 70vh; /* Limit height of posts container */
         overflow-y: auto;
-    }
-    .post {
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    .post-meta {
-        font-size: 0.9em;
-        color: #555;
-        margin-bottom: 5px;
-    }
-
-    .post-content {
-        font-size: 1em;
-        color: #333;
     }
 
     .post-card {
@@ -347,12 +289,6 @@
 .join-btn:hover {
     background-color: rgb(100, 208, 241);
     color: #fff;
-}
-
-.datetime{
-    font-size: 1.1rem;
-    color: #666;
-    margin-bottom: 10px;
 }
 
 
@@ -448,29 +384,23 @@
 
 <div id="posts-container" style="margin-top: 20px; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
     <h2>Posts</h2>
-    <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
-    </div>
+    <div id="posts" style="display: flex; flex-direction: column; gap: 10px;"></div>
 </div>
-<button id="create-post-button"></button>
-    <div id="post-popup">
-        <h3>Create Post</h3>
-        <textarea id="post-title" placeholder="Write your post here..." rows="5" cols="30"></textarea><br>
-        <button onclick="addPost()">Submit Post</button>
-        <button onclick="closePopup()">Close</button>
-    </div>
 
-    <div id="posts-container"></div>
 
+
+
+
+<!-- Footer -->
+<div class="footer">
+    <p>&copy; 2024 SeaGro. All Rights Reserved.</p>
+</div>
 
 {% endblock %}
 
 {% block script %}
 
 <script>
-            const now = new Date();
-            const formattedDate = now.toLocaleDateString();
-            const formattedTime = now.toLocaleTimeString();
-
     // Toggle container visibility
     document.querySelectorAll('.collapsible').forEach(collapsible => {
         collapsible.addEventListener('click', () => {
@@ -542,62 +472,36 @@
         modal.classList.toggle('hidden');
     }
 
-    const postPopup = document.getElementById('post-popup');
-        const createPostButton = document.getElementById('create-post-button');
+    function submitPost() {
+        // Use unique IDs for the modal fields
+        const title = document.getElementById('modal-post-title').value.trim();
+        const content = document.getElementById('modal-post-content').value.trim();
 
-        createPostButton.addEventListener('click', () => {
-            postPopup.style.display = 'block';
-        });
-
-        function closePopup() {
-            postPopup.style.display = 'none';
+        // Validation: Check if both fields are filled
+        if (!title || !content) {
+            alert('Both title and content are required.');
+            return;
         }
 
-        function addPost() {
-    const postTitle = document.getElementById('post-title').value;
-    if (!postTitle.trim()) {
-        alert('Post title cannot be empty!');
-        return;
+        // Create a new post card
+        const postCard = document.createElement('div');
+        postCard.className = 'post-card';
+        postCard.innerHTML = `
+            <div class="post-title">${title}</div>
+            <div class="post-content">${content}</div>
+        `;
+
+        // Add the post card to the posts container
+        const postsContainer = document.getElementById('community-posts');
+        postsContainer.appendChild(postCard);
+
+        // Clear the input fields
+        document.getElementById('modal-post-title').value = '';
+        document.getElementById('modal-post-content').value = '';
+
+        // Hide the modal
+        togglePostModal();
     }
-
-    const postsContainer = document.getElementById('posts-container');
-
-    // Create a new post container
-    const newPost = document.createElement('div');
-    newPost.classList.add('post');
-
-    // Get current date and time
-    const now = new Date();
-    const formattedDateTime = now.toLocaleString(); // Format as needed
-
-    // Create meta info for date and time
-    const metaInfo = document.createElement('div');
-    metaInfo.classList.add('post-meta');
-    metaInfo.textContent = formattedDateTime; // Set the date and time
-
-    // Add post content
-    const postContent = document.createElement('div');
-    postContent.classList.add('post-content');
-    postContent.innerHTML = postTitle;
-
-    // Append meta info and content to the post container
-    newPost.appendChild(metaInfo);
-    newPost.appendChild(postContent);
-
-    // Append new post to the posts container
-    postsContainer.appendChild(newPost);
-
-    // Clear the input field
-    document.getElementById('post-title').value = '';
-
-    // Scroll to the bottom of the posts container
-    postsContainer.scrollTop = postsContainer.scrollHeight;
-
-    // Close the popup after posting (if applicable)
-    closePopup();
-}
-
-
 
 
     // Add event listener for Create Post Button
@@ -673,33 +577,6 @@ window.addEventListener('resize', () => {
         container.style.height = `${window.innerHeight}px`;
     });
 });
-    // Variables to track active styles
-    let isBold = false;
-    let isItalic = false;
-    let currentColor = '#000000'; // Default black color
-
-    function applyStyle(style) {
-        const textArea = document.getElementById('post-title');
-
-        // Apply or remove bold style
-        if (style === 'bold') {
-            isBold = !isBold; // Toggle bold
-            textArea.style.fontWeight = isBold ? 'bold' : 'normal';
-        }
-
-        // Apply or remove italic style
-        if (style === 'italic') {
-            isItalic = !isItalic; // Toggle italic
-            textArea.style.fontStyle = isItalic ? 'italic' : 'normal';
-        }
-    }
-
-    function changeColor(color) {
-        const textArea = document.getElementById('post-title');
-        currentColor = color; // Update current color
-        textArea.style.color = currentColor;
-    }
-
 function formatText(command) {
     document.execCommand(command, false, null);
 }

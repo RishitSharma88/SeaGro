@@ -560,8 +560,8 @@
         return;
     }
 
-    const postsContainer = document.getElementById('posts-container');
-
+    const postsContainer = document.getElementById('posts');
+    
     // Create a new post container
     const newPost = document.createElement('div');
     newPost.classList.add('post');
@@ -593,10 +593,9 @@
     // Scroll to the bottom of the posts container
     postsContainer.scrollTop = postsContainer.scrollHeight;
 
-    // Close the popup after posting (if applicable)
+    // Close the popup after posting
     closePopup();
 }
-
 
 
 

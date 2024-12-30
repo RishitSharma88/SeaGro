@@ -7,11 +7,10 @@
 {% block styles %}
     <style>
         body {
+            background-color: rgb(244, 244, 244);
+            font-family: 'Arial', sans-serif;
             margin: 0;
-        padding: 0;
-        font-family: Arial, sans-serif;
-        height: 100vh;
-        overflow-y: scroll; /* Enables scrolling for the entire page */
+            padding: 0;
         }
 
         /* Collapsible Containers */
@@ -227,73 +226,13 @@
         font-size: 1.5rem;
         color: #666;
     }
-    #post-popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            border: 1px solid #ccc;
-            padding: 20px;
-            background: #fff;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-        }
-
-        #posts-container {
-            max-height: 400px;
-            overflow-y: auto;
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        .post {
-            margin-bottom: 15px;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-        }
-
-        .post-meta {
-    font-size: 0.9em;
-    color: #555;
-    text-align: right; /* Align text to the right */
-}
-
-
-        .post-content {
-            font-size: 1em;
-            color: #333;
-        }
 
     /* Posts Container Styling */
     .posts-container {
         margin-top: 20px;
-        max-height: 400px;
         display: flex;
         flex-direction: column;
         gap: 10px;
-        max-height: 70vh; /* Limit height of posts container */
-        overflow-y: auto;
-    }
-    .post {
-        margin-bottom: 15px;
-        padding: 10px;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        background-color: #f9f9f9;
-    }
-    .post-meta {
-        font-size: 0.9em;
-        color: #555;
-        margin-bottom: 5px;
-    }
-
-    .post-content {
-        font-size: 1em;
-        color: #333;
     }
 
     .post-card {
@@ -348,12 +287,66 @@
     background-color: rgb(100, 208, 241);
     color: #fff;
 }
-
-.datetime{
-    font-size: 1.1rem;
-    color: #666;
+.edit-bar {
+    display: flex;
+    gap: 10px;
     margin-bottom: 10px;
 }
+
+.edit-bar button {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.edit-bar button:hover {
+    background-color: #ddd;
+}
+
+.edit-bar select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+/* Modal Base Styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    display: none; /* Initially hidden */
+}
+
+/* Show the modal when the class 'hidden' is removed */
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+.close-btn {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
 
 
 
@@ -411,66 +404,50 @@
     <div class="center-content" id="center-content">
         <h2>Welcome to SeaGro Communities</h2>
         <p>Select a community to see its details or join to participate.</p>
+        <button onclick="togglePostModal()">Create Post</button>
     </div>
-    <!-- Popup Modal -->
-<!-- Modal for Creating a Post -->
-<div id="create-post-modal" class="modal hidden">
-    <div class="modal-content">
-        <span class="close-btn" onclick="togglePostModal()">×</span>
-        <h2>Create Post</h2>
-        <label for="modal-post-title">Title:</label>
-        <input type="text" id="modal-post-title" placeholder="Enter post title">
-        <label for="modal-post-content">Content:</label>
-        <textarea id="modal-post-content" placeholder="Write your post here"></textarea>
-        <button id="post-button" onclick="submitPost()">Post</button>
-    </div>
-</div>
 
+    <!-- Modal for Creating a Post -->
+    <div id="create-post-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="togglePostModal()">&times;</span>
+            <h2>Create Post</h2>
 
-<div id="post-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1002; justify-content: center; align-items: center;">
-    <div style="background-color: #fff; padding: 20px; border-radius: 8px; width: 400px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);">
-        <h2>Create Post</h2>
-        <div class="toolbar" style="display: flex; gap: 10px; margin-bottom: 10px;">
-            <button onclick="applyFormat('bold')" style="padding: 5px 10px; border: none; background-color: rgb(71, 69, 238); color: white; border-radius: 4px; cursor: pointer;">B</button>
-            <button onclick="applyFormat('italic')" style="padding: 5px 10px; border: none; background-color: rgb(71, 69, 238); color: white; border-radius: 4px; cursor: pointer;"><i>I</i></button>
-            <input type="color" id="text-color-picker" onchange="applyColor(this.value)" style="cursor: pointer;" />
-        </div>
-        <div id="post-title" contenteditable="true" placeholder="Post Title" 
-            style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; min-height: 40px;"></div>
-        <div id="post-content" contenteditable="true" placeholder="Post Content" 
-            style="width: 100%; height: 100px; padding: 10px; border: 1px solid #ccc; border-radius: 4px; overflow-y: auto;"></div>
-        <div style="text-align: right;">
-            <button id="close-modal" style="background-color: #ccc; padding: 8px 12px; border: none; border-radius: 4px; margin-right: 10px;">Cancel</button>
-            <button id="submit-post" style="background-color: rgb(71, 69, 238); color: #fff; padding: 8px 12px; border: none; border-radius: 4px;">Post</button>
+            <!-- Edit Bar -->
+            <div class="edit-bar">
+                <button onclick="applyStyle('bold')"><b>B</b></button>
+                <button onclick="applyStyle('italic')"><i>I</i></button>
+                <button onclick="applyStyle('underline')"><u>U</u></button>
+                <select id="color-picker" onchange="changeColor()">
+                    <option value="black">Black</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                </select>
+            </div>
+
+            <!-- Typing Area -->
+            <textarea id="modal-post-content" placeholder="Write your post here"></textarea>
+
+            <button id="post-button" onclick="submitPost()">Post</button>
         </div>
     </div>
-</div>
 
-<div id="posts-container" style="margin-top: 20px; padding: 20px; background-color: #f9f9f9; border: 1px solid #ddd; border-radius: 8px;">
-    <h2>Posts</h2>
-    <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
-    </div>
-</div>
-<button id="create-post-button"></button>
-    <div id="post-popup">
-        <h3>Create Post</h3>
-        <textarea id="post-title" placeholder="Write your post here..." rows="5" cols="30"></textarea><br>
-        <button onclick="addPost()">Submit Post</button>
-        <button onclick="closePopup()">Close</button>
+    <!-- Posts Container -->
+    <div id="community-posts" class="posts-container">
+        <!-- Posts will appear here -->
     </div>
 
-    <div id="posts-container"></div>
-
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 SeaGro. All Rights Reserved.</p>
+    </div>
 
 {% endblock %}
 
 {% block script %}
 
 <script>
-            const now = new Date();
-            const formattedDate = now.toLocaleDateString();
-            const formattedTime = now.toLocaleTimeString();
-
     // Toggle container visibility
     document.querySelectorAll('.collapsible').forEach(collapsible => {
         collapsible.addEventListener('click', () => {
@@ -542,62 +519,36 @@
         modal.classList.toggle('hidden');
     }
 
-    const postPopup = document.getElementById('post-popup');
-        const createPostButton = document.getElementById('create-post-button');
+    function submitPost() {
+        // Use unique IDs for the modal fields
+        const title = document.getElementById('modal-post-title').value.trim();
+        const content = document.getElementById('modal-post-content').value.trim();
 
-        createPostButton.addEventListener('click', () => {
-            postPopup.style.display = 'block';
-        });
-
-        function closePopup() {
-            postPopup.style.display = 'none';
+        // Validation: Check if both fields are filled
+        if (!title || !content) {
+            alert('Both title and content are required.');
+            return;
         }
 
-        function addPost() {
-    const postTitle = document.getElementById('post-title').value;
-    if (!postTitle.trim()) {
-        alert('Post title cannot be empty!');
-        return;
+        // Create a new post card
+        const postCard = document.createElement('div');
+        postCard.className = 'post-card';
+        postCard.innerHTML = `
+            <div class="post-title">${title}</div>
+            <div class="post-content">${content}</div>
+        `;
+
+        // Add the post card to the posts container
+        const postsContainer = document.getElementById('community-posts');
+        postsContainer.appendChild(postCard);
+
+        // Clear the input fields
+        document.getElementById('modal-post-title').value = '';
+        document.getElementById('modal-post-content').value = '';
+
+        // Hide the modal
+        togglePostModal();
     }
-
-    const postsContainer = document.getElementById('posts-container');
-
-    // Create a new post container
-    const newPost = document.createElement('div');
-    newPost.classList.add('post');
-
-    // Get current date and time
-    const now = new Date();
-    const formattedDateTime = now.toLocaleString(); // Format as needed
-
-    // Create meta info for date and time
-    const metaInfo = document.createElement('div');
-    metaInfo.classList.add('post-meta');
-    metaInfo.textContent = formattedDateTime; // Set the date and time
-
-    // Add post content
-    const postContent = document.createElement('div');
-    postContent.classList.add('post-content');
-    postContent.innerHTML = postTitle;
-
-    // Append meta info and content to the post container
-    newPost.appendChild(metaInfo);
-    newPost.appendChild(postContent);
-
-    // Append new post to the posts container
-    postsContainer.appendChild(newPost);
-
-    // Clear the input field
-    document.getElementById('post-title').value = '';
-
-    // Scroll to the bottom of the posts container
-    postsContainer.scrollTop = postsContainer.scrollHeight;
-
-    // Close the popup after posting (if applicable)
-    closePopup();
-}
-
-
 
 
     // Add event listener for Create Post Button
@@ -673,84 +624,70 @@ window.addEventListener('resize', () => {
         container.style.height = `${window.innerHeight}px`;
     });
 });
-    // Variables to track active styles
-    let isBold = false;
-    let isItalic = false;
-    let currentColor = '#000000'; // Default black color
-
-    function applyStyle(style) {
-        const textArea = document.getElementById('post-title');
-
-        // Apply or remove bold style
-        if (style === 'bold') {
-            isBold = !isBold; // Toggle bold
-            textArea.style.fontWeight = isBold ? 'bold' : 'normal';
-        }
-
-        // Apply or remove italic style
-        if (style === 'italic') {
-            isItalic = !isItalic; // Toggle italic
-            textArea.style.fontStyle = isItalic ? 'italic' : 'normal';
-        }
-    }
-
-    function changeColor(color) {
-        const textArea = document.getElementById('post-title');
-        currentColor = color; // Update current color
-        textArea.style.color = currentColor;
-    }
-
 function formatText(command) {
     document.execCommand(command, false, null);
 }
 
-function changeTextColor(color) {
-    document.execCommand('foreColor', false, color);
-}
-function applyFormat(command) {
-    document.execCommand(command, false, null);
-}
-
 function applyColor(color) {
-    document.execCommand('foreColor', false, color);
+    document.execCommand("foreColor", false, color);
+    document.getElementById('text-color-picker').style.display = 'none'; // Hide the color picker
 }
 
-document.getElementById('submit-post').addEventListener('click', () => {
-    const postTitle = document.getElementById('post-title').innerHTML.trim();
-    const postContent = document.getElementById('post-content').innerHTML.trim();
+document.querySelector('button[onclick="formatText(\'color\')"]').addEventListener('click', () => {
+    document.getElementById('text-color-picker').style.display = 'block';
+});
+function applyStyle(style) {
+    const contentBox = document.getElementById('modal-post-content');
+    const start = contentBox.selectionStart;
+    const end = contentBox.selectionEnd;
 
-    if (postTitle === '' || postContent === '') {
-        alert('Both title and content are required!');
+    if (start === end) {
+        alert('Please select some text to apply the style.');
         return;
     }
 
-    const postsContainer = document.getElementById('posts');
-    const newPost = document.createElement('div');
-    newPost.style.padding = '10px';
-    newPost.style.border = '1px solid #ccc';
-    newPost.style.borderRadius = '4px';
-    newPost.style.backgroundColor = '#fff';
+    const selectedText = contentBox.value.substring(start, end);
+    let styledText = '';
 
-    newPost.innerHTML = `
-        <h3 style="margin: 0 0 10px;">${postTitle}</h3>
-        <div>${postContent}</div>
-    `;
+    switch (style) {
+        case 'bold':
+            styledText = `<b>${selectedText}</b>`;
+            break;
+        case 'italic':
+            styledText = `<i>${selectedText}</i>`;
+            break;
+        case 'underline':
+            styledText = `<u>${selectedText}</u>`;
+            break;
+    }
 
-    postsContainer.appendChild(newPost);
+    contentBox.value = 
+        contentBox.value.substring(0, start) +
+        styledText +
+        contentBox.value.substring(end);
 
-    // Clear and hide modal
-    document.getElementById('post-title').innerHTML = '';
-    document.getElementById('post-content').innerHTML = '';
-    document.getElementById('post-modal').style.display = 'none';
+    // Set the caret position after the inserted text
+    contentBox.selectionStart = contentBox.selectionEnd = start + styledText.length;
+}
+
+function changeColor() {
+    const color = document.getElementById('color-picker').value;
+    const contentBox = document.getElementById('modal-post-content');
+    contentBox.style.color = color;
+}
+
+// Function to toggle the visibility of the modal
+function togglePostModal() {
+    const modal = document.getElementById('create-post-modal');
+    modal.classList.toggle('hidden');
+}
+
+// Prevent closing modal if user clicks inside it
+document.getElementById('create-post-modal').addEventListener('click', function(event) {
+    if (event.target === this) {
+        togglePostModal();
+    }
 });
-
-document.getElementById('close-modal').addEventListener('click', () => {
-    document.getElementById('post-title').innerHTML = '';
-    document.getElementById('post-content').innerHTML = '';
-    document.getElementById('post-modal').style.display = 'none';
-});
-
-
 
 
 

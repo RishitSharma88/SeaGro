@@ -1,0 +1,490 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Communities - SeaGro
+{% endblock %}  
+
+{% block styles %}
+    <style>
+        body {
+            background-color: rgb(244, 244, 244);
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Collapsible Containers */
+        .container {
+        background-color: rgb(250, 250, 250);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+        box-sizing: border-box;
+        height: 100vh; /* Set the height to full viewport */
+        overflow-y: auto; /* Add scroll behavior */
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 0;
+        }
+
+
+        .leftcontainer {
+            left: 0;
+            width: 25%;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            overflow-y:scroll;
+        }
+
+        .rightcontainer {
+            right: 0;
+            width: 25%;
+            margin-top: 30px;
+            overflow-y:scroll;
+        }
+
+        .collapsible {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .collapsible .arrow {
+            font-size: 1.2rem;
+        }
+
+        .content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center; /* Center cards vertically */
+    align-items: center; /* Center cards horizontally */
+}
+
+.community-card {
+    background-image: linear-gradient(to right, rgb(71, 69, 238), rgb(100, 208, 241));
+    color: #fff;
+    padding: 20px;
+    max-height: 150px;
+    overflow: visible;
+    border-radius: 12px; /* More rounded corners */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    width: calc(70% - 20px); /* Adjusted for margin */
+    margin: 10px auto; /* Center cards */
+}
+
+.community-card:hover {
+    transform: translateY(-5px);
+}
+
+
+
+        .content.hidden {
+            display: none;
+        }
+        
+
+        .community-card .community-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .community-card .join-btn {
+            background-color: #fff;
+            color: rgb(100, 208, 241);
+            padding: 8px 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .community-card .join-btn:hover {
+            background-color:rgb(71, 69, 238);
+            color: #fff;
+        }
+
+        /* Center Content */
+        .center-content {
+            margin: 0 auto;
+            padding: 100px 50px;
+            max-width: 800px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .center-content h2 {
+            font-size: 2rem;
+            color: rgb(100, 208, 241);
+            margin-bottom: 20px;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgb(124, 122, 241);
+            color: #fff;
+            padding: 15px 20px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer p {
+            margin: 0;
+            font-size: 0.9rem;
+        }
+        .side-toggle {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgb(71, 69, 238);
+        color: #fff;
+        font-size: 1.5rem;
+        font-weight: bold;
+        cursor: pointer;
+        padding: 5px 10px;
+        z-index: 1001;
+    }
+
+    .side-toggle.left {
+        left: -12px; /* Position toggle button outside the left container */
+    }
+
+    .side-toggle.right {
+        right: -12px; /* Position toggle button outside the right container */
+    }
+
+    .collapsed {
+        width: 0;
+        padding: 0;
+        overflow: hidden;
+    }
+    /* Modal Styling */
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        z-index: 2000;
+        display: none;
+        width: 80%;
+        max-width: 400px;
+    }
+
+    .modal-content {
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .modal-content input,
+    .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+
+    .modal-content button {
+        padding: 10px;
+        background-color: rgb(71, 69, 238);
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .modal-content button:hover {
+        background-color: rgb(100, 208, 241);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .close-btn {
+        align-self: flex-end;
+        cursor: pointer;
+        font-size: 1.5rem;
+        color: #666;
+    }
+
+    /* Posts Container Styling */
+    .posts-container {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .post-card {
+        background-color: #fff;
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-card .post-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .post-card .post-content {
+        font-size: 1rem;
+        color: #555;
+    }
+    @media (max-width: 768px) {
+    .leftcontainer, .rightcontainer {
+        width: 100%; /* Make it full width on small screens */
+        position: relative;
+        height: auto;
+    }
+}
+.container::after {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50px;
+    height: 5px;
+    background: linear-gradient(to right, #ddd, #aaa);
+    border-radius: 2.5px;
+    opacity: 0.5;
+}
+.join-btn {
+    background-color: #fff;
+    color: rgb(71, 69, 238);
+    padding: 10px 15px; /* Increased padding */
+    border-radius: 20px; /* Rounded button */
+    border: none;
+    font-size: 1rem; /* Slightly larger text */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.join-btn:hover {
+    background-color: rgb(100, 208, 241);
+    color: #fff;
+}
+.edit-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.edit-bar button {
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.edit-bar button:hover {
+    background-color: #ddd;
+}
+
+.edit-bar select {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+/* Modal Base Styling */
+.modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 500px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    border-radius: 8px;
+    display: none; /* Initially hidden */
+}
+
+/* Show the modal when the class 'hidden' is removed */
+.modal.hidden {
+    display: none;
+}
+
+.modal-content {
+    padding: 20px;
+}
+
+.close-btn {
+    float: right;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #aaa;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+
+
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+  
+
+    <!-- Left Container -->
+    <div class="container leftcontainer">
+        <div class="collapsible">
+            <span>Joined Communities</span>
+            <span class="arrow">&#9654;</span>
+        </div>
+        <div class="content hidden" id="joined-communities">
+            <!-- Joined Communities will be added here dynamically -->
+        </div>
+    </div>
+    <div class="side-toggle left" onclick="toggleContainer('left')">&#9664;</div>
+
+    <!-- Right Container -->
+    <div class="container rightcontainer">
+        <div class="collapsible">
+            <span>All Communities</span>
+            <span class="arrow">&#9660;</span>
+        </div>
+        <div class="content" id="all-communities">
+            <div class="community-card">
+                <span class="community-title">Beach Explorers</span>
+                <button class="join-btn" onclick="joinCommunity(this, 'Beach Explorers')">Join</button>
+            </div>
+            <div class="community-card">
+                <span class="community-title">Sea Lovers</span>
+                <button class="join-btn" onclick="joinCommunity(this, 'Sea Lovers')">Join</button>
+            </div>
+            <div class="community-card">
+                <span class="community-title">Travel Bloggers</span>
+                <button class="join-btn" onclick="joinCommunity(this, 'Travel Bloggers')">Join</button>
+            </div>
+            <div class="community-card">
+                <span class="community-title">Ocean Conservation</span>
+                <button class="join-btn" onclick="joinCommunity(this, 'Ocean Conservation')">Join</button>
+            </div>
+            <div class="community-card">
+                <span class="community-title">Photography Enthusiasts</span>
+                <button class="join-btn" onclick="joinCommunity(this, 'Photography Enthusiasts')">Join</button>
+            </div>
+        </div>
+    </div>
+    <div class="side-toggle right" onclick="toggleContainer('right')">&#9654;</div>
+
+    <!-- Center Content -->
+    <div class="center-content" id="center-content">
+        <h2>Welcome to SeaGro Communities</h2>
+        <p>Select a community to see its details or join to participate.</p>
+        <button onclick="togglePostModal()">Create Post</button>
+    </div>
+
+    <!-- Modal for Creating a Post -->
+    <div id="create-post-modal" class="modal hidden">
+        <div class="modal-content">
+            <span class="close-btn" onclick="togglePostModal()">&times;</span>
+            <h2>Create Post</h2>
+
+            <!-- Edit Bar -->
+            <div class="edit-bar">
+                <button onclick="applyStyle('bold')"><b>B</b></button>
+                <button onclick="applyStyle('italic')"><i>I</i></button>
+                <button onclick="applyStyle('underline')"><u>U</u></button>
+                <select id="color-picker" onchange="changeColor()">
+                    <option value="black">Black</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                </select>
+            </div>
+
+            <!-- Typing Area -->
+            <textarea id="modal-post-content" placeholder="Write your post here"></textarea>
+
+            <button id="post-button" onclick="submitPost()">Post</button>
+        </div>
+    </div>
+
+    <!-- Posts Container -->
+    <div id="community-posts" class="posts-container">
+        <!-- Posts will appear here -->
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+        <p>&copy; 2024 SeaGro. All Rights Reserved.</p>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+
+<script>
+    // Toggle Modal Visibility
+    function togglePostModal() {
+        const modal = document.getElementById('create-post-modal');
+        modal.classList.toggle('hidden');
+    }
+
+    // Apply text styles
+    function applyStyle(style) {
+        document.execCommand(style, false, null);
+    }
+
+    // Change text color
+    function changeColor() {
+        const color = document.getElementById('color-picker').value;
+        document.execCommand('foreColor', false, color);
+    }
+
+    // Submit post
+    function submitPost() {
+        const content = document.getElementById('modal-post-content').value;
+        if (content.trim() === '') {
+            alert('Please write something before posting.');
+            return;
+        }
+
+        const postContainer = document.getElementById('community-posts');
+        const newPost = document.createElement('div');
+        newPost.classList.add('post');
+        newPost.innerHTML = `<p>${content}</p>`;
+        postContainer.appendChild(newPost);
+
+        // Close the modal
+        togglePostModal();
+
+        // Clear the modal content
+        document.getElementById('modal-post-content').value = '';
+    }
+</script>
+    
+{% endblock %}
