@@ -1,0 +1,328 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Bike Sharing
+    
+{% endblock %}  
+    
+{% block styles %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(to bottom left, #60979e, #050a30);
+        color: #0f0f0f;
+        overflow:scroll;
+    }
+    
+    /* Header Section */
+    .header {
+        text-align: center;
+        padding: 50px 20px;
+        background: linear-gradient(to bottom left, #60979e, #050a30);
+        color: #ffffff;
+    }
+
+    .header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+
+    .header p {
+        font-size: 1.2rem;
+    }
+
+    /* Main Content */
+    .content {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 20px;
+        gap: 20px;
+    }
+
+    /* Bike Availability Section */
+    .bike-availability {
+        flex: 1 1 300px;
+        background: #FFF;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .bike-availability h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .bike-list {
+        list-style: none;
+        padding: 0;
+    }
+
+    .bike-list li {
+        padding: 10px;
+        border-bottom: 1px solid #EEE;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .bike-list li:last-child {
+        border-bottom: none;
+    }
+
+    /* Map Section */
+    /* .map-container {
+        flex: 2 1 600px;
+        background: #FFF;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .map-container h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    } */
+
+    #map {
+            height: 500px;
+            width: 90%;
+            margin-left: 30px;
+        }
+
+    /* Booking Form Section */
+    .booking-form {
+        flex: 1 1 300px;
+        background: #FFF;
+        border-radius: 10px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .booking-form h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+
+    .booking-form label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .booking-form input,
+    .booking-form select,
+    .booking-form button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #CCC;
+        border-radius: 5px;
+    }
+
+    .booking-form button {
+        background: #0077B6;
+        color: #FFF;
+        font-weight: bold;
+        border: none;
+        cursor: pointer;
+    }
+
+    .booking-form button:hover {
+        background: #005F8E;
+    }
+
+    /* Footer */
+    footer {
+        text-align: center;
+        padding: 20px;
+        background: #0077B6;
+        color: #FFF;
+        margin-top: 20px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Header Section -->
+<header class="header">
+    <h1>Bike Sharing</h1>
+    <p>Find and book a bike near you with ease!</p>
+</header>
+
+<!-- Main Content -->
+<div class="content"> 
+
+    <!-- Bike Availability Section -->
+    <div class="bike-availability">
+        <h2>Available Bikes</h2>
+        <ul class="bike-list">
+            <li><span>Station 1</span> <span>5 Bikes</span></li>
+            <li><span>Station 2</span> <span>3 Bikes</span></li>
+            <li><span>Station 3</span> <span>7 Bikes</span></li>
+            <li><span>Station 4</span> <span>2 Bikes</span></li>
+        </ul>
+    </div>
+    
+    
+
+    <!-- Map Section -->
+    <div class="map-container">
+        <h2>Bike Stations</h2>
+        
+    </div>
+
+    <!-- Booking Form Section -->
+    <div class="booking-form">
+        <h2>Book a Bike</h2>
+        <form>
+            <label for="station">Select Station:</label>
+            <select id="station">
+                <option>Station 1</option>
+                <option>Station 2</option>
+                <option>Station 3</option>
+                <option>Station 4</option>
+            </select>
+
+            <label for="duration">Duration (hours):</label>
+            <input type="number" id="duration" placeholder="Enter duration">
+
+            <label for="name">Your Name:</label>
+            <input type="text" id="name" placeholder="Enter your name">
+
+            <button type="submit">Book Now</button>
+        </form>
+    </div>
+</div>
+<div id="map"></div>
+
+<!-- Footer -->
+<footer>
+    &copy; 2024 Bike Sharing. All rights reserved.
+</footer>
+{% endblock %}
+
+{% block script %}
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<script>
+    // Initialize the map and center it at Marker 1 (TSEC)
+    const map = L.map('map').setView([19.0645, 72.8358], 14); 
+
+    // Add OpenStreetMap tiles to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    // Marker 1 (TSEC) with default marker icon
+    const marker1 = L.marker([19.0645, 72.8358]).addTo(map)
+        .bindPopup('Station 1')
+        .openPopup();
+       
+    // Custom icons for other markers
+    const customIcon = L.icon({
+        iconUrl: 'https://i.postimg.cc/xqV0HZJW/Screenshot-2024-12-30-at-7-01-27-PM-removebg-preview.png', // Ensure this path is correct
+        iconSize: [25, 41],     // size of the icon
+        iconAnchor: [12, 41],   // point of the icon which will correspond to marker's location
+        popupAnchor: [1, -34],  // point from which the popup should open relative to the iconAnchor
+    });
+
+    const marker2 = L.marker([19.063223, 72.835549], { icon: customIcon }).addTo(map)
+        .bindPopup('National College Bus Stop');
+
+    const marker3 = L.marker([19.0606982, 72.8336946], { icon: customIcon }).addTo(map)
+        .bindPopup('Bandra Station Bus Stop');
+
+    const marker4 = L.marker([19.072411, 72.8283779], { icon: customIcon }).addTo(map)
+        .bindPopup('Khar Road');
+
+    const marker5 = L.marker([19.060698, 72.8317539], { icon: customIcon }).addTo(map)
+        .bindPopup('Bandra East');
+
+    // Additional random markers near "Station 1"
+    const marker6 = L.marker([19.0655, 72.8368], { icon: customIcon }).addTo(map)
+        .bindPopup('Station 2');
+    marker6.openPopup(); // Call openPopup separately
+
+    const marker7 = L.marker([19.0635, 72.8350], { icon: customIcon }).addTo(map)
+        .bindPopup('Station 3');
+    marker7.openPopup(); // Call openPopup separately
+
+    const marker8 = L.marker([19.0648, 72.8372], { icon: customIcon }).addTo(map)
+        .bindPopup('Station 4');
+    marker8.openPopup(); // Call openPopup separately
+
+    // Automatically adjust the map to fit all markers
+    const group = L.featureGroup([marker1, marker2, marker3, marker4, marker5, marker6, marker7, marker8]);
+    map.fitBounds(group.getBounds());
+
+    // Timer DOM element
+    const timerDisplay = document.createElement('div');
+    timerDisplay.style.position = 'fixed';
+    timerDisplay.style.top = '10px';
+    timerDisplay.style.right = '10px';
+    timerDisplay.style.padding = '10px';
+    timerDisplay.style.background = '#0077B6';
+    timerDisplay.style.color = '#FFF';
+    timerDisplay.style.fontSize = '1rem';
+    timerDisplay.style.borderRadius = '5px';
+    timerDisplay.style.display = 'none'; // Hidden by default
+    document.body.appendChild(timerDisplay);
+
+    // Handle form submission
+    document.querySelector('.booking-form form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const stationSelect = document.getElementById('station');
+        const selectedStation = stationSelect.value;
+        const durationInput = document.getElementById('duration');
+        const duration = parseInt(durationInput.value);
+
+        if (!selectedStation || isNaN(duration) || duration <= 0) {
+            alert('Please select a valid station and duration.');
+            return;
+        }
+
+        // Reduce bike count
+        const stationData = bikeStations[selectedStation];
+        if (stationData.bikes > 0) {
+            stationData.bikes -= 1;
+
+            // Update the bike list in the UI
+            const bikeListItems = document.querySelectorAll('.bike-list li');
+            bikeListItems.forEach(item => {
+                if (item.textContent.includes(selectedStation)) {
+                    const bikeCountElement = item.querySelector('span:last-child');
+                    bikeCountElement.textContent = `${stationData.bikes} Bikes`;
+                }
+            });
+
+            // Start the timer
+            let remainingTime = duration * 60; // Convert hours to seconds
+            timerDisplay.style.display = 'block';
+            const timerInterval = setInterval(() => {
+                if (remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.style.display = 'none';
+                    alert(`Time's up for your bike rental at ${selectedStation}.`);
+                    return;
+                }
+
+                const hours = Math.floor(remainingTime / 3600);
+                const minutes = Math.floor((remainingTime % 3600) / 60);
+                const seconds = remainingTime % 60;
+
+                timerDisplay.textContent = `Time Remaining: ${hours}h ${minutes}m ${seconds}s`;
+                remainingTime -= 1;
+            }, 1000);
+        } else {
+            alert(`No bikes available at ${selectedStation}.`);
+        }
+    });
+</script>
+
+
+
+{% endblock %}

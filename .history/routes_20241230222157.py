@@ -7,7 +7,6 @@ import requests
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from functools import wraps
-import json
 from urllib.parse import urljoin
 
 NEWS_API_KEY = os.getenv('NEWS_API_KEY')
@@ -166,12 +165,31 @@ def jobboard():
         "x-rapidapi-host": JOBS_API_HOST_HEADER
     }
 
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers) 
     if response.status_code == 200:
         jobs = response.json()
+         
     else:
         jobs = []
-    return render_template('jobBoard.html', jobs = jobs['data'])
+
+    for job in jobs:
+
+        if 'date_posted' in job and job['date_posted']:
+            try:
+                job['date_posted'] = datetime.strptime(job['date_posted'], "%Y-%m-%d").strftime("%d/%m/%Y")
+            except ValueError:
+                job['date_posted'] = "Invalid date"
+        else:
+            job['date_posted'] = "Date not provided"
+
+        if 'locations_raw' in job and job['locations_raw']:
+            location = job['locations_raw'][0]  
+            job['address'] = location.get('address', {}).get('addressLocality', '') + ", " + \
+                             location.get('address', {}).get('addressCountry', '')
+        else:
+            job['address'] = "Location not specified"
+
+    return render_template('jobBoard.html', jobs = jobs)
 
 @app.route('/tech_news')
 def tech_news():
