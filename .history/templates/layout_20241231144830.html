@@ -162,9 +162,9 @@
     {% endblock %}
 
     <!-- Chat Icon Box -->
-    <a href="http://127.0.0.1:5001" target="_blank" class="chat-box">
+    <a href="chatsection.html" class="chat-box">
         <img src="https://www.pngplay.com/wp-content/uploads/7/Chat-Icon-PNG-HD-Quality.png" alt="Chat Icon">
-        Chat
+        Chat with Us
     </a>
 
     <script>
@@ -172,101 +172,99 @@
             document.body.classList.toggle('dark-mode');
         }
         // WebSocket connection URL (replace 'localhost' with your server's IP if not running locally)
-        const socket = new WebSocket("ws://localhost:5001/ws");
-        
-};
+        const socket = new WebSocket("ws://localhost:6789");
     
         // Elements
-        // const chatButton = document.querySelector('.chat-box');
-        // const chatWindow = document.createElement('div');
-        // const chatInput = document.createElement('input');
-        // const chatMessages = document.createElement('div');
-        // const chatSendButton = document.createElement('button');
+        const chatButton = document.querySelector('.chat-box');
+        const chatWindow = document.createElement('div');
+        const chatInput = document.createElement('input');
+        const chatMessages = document.createElement('div');
+        const chatSendButton = document.createElement('button');
     
         // Chat window styling
-        // chatWindow.style.position = 'fixed';
-        // chatWindow.style.bottom = '80px';
-        // chatWindow.style.right = '30px';
-        // chatWindow.style.width = '300px';
-        // chatWindow.style.height = '400px';
-        // chatWindow.style.backgroundColor = '#fff';
-        // chatWindow.style.boxShadow = '0 3px 8px rgba(0, 0, 0, 0.3)';
-        // chatWindow.style.borderRadius = '10px';
-        // chatWindow.style.display = 'none';
-        // chatWindow.style.flexDirection = 'column';
-        // chatWindow.style.padding = '10px';
-        // chatWindow.style.zIndex = '1000';
+        chatWindow.style.position = 'fixed';
+        chatWindow.style.bottom = '80px';
+        chatWindow.style.right = '30px';
+        chatWindow.style.width = '300px';
+        chatWindow.style.height = '400px';
+        chatWindow.style.backgroundColor = '#fff';
+        chatWindow.style.boxShadow = '0 3px 8px rgba(0, 0, 0, 0.3)';
+        chatWindow.style.borderRadius = '10px';
+        chatWindow.style.display = 'none';
+        chatWindow.style.flexDirection = 'column';
+        chatWindow.style.padding = '10px';
+        chatWindow.style.zIndex = '1000';
     
         // Chat messages area styling
-        // chatMessages.style.flex = '1';
-        // chatMessages.style.overflowY = 'auto';
-        // chatMessages.style.marginBottom = '10px';
+        chatMessages.style.flex = '1';
+        chatMessages.style.overflowY = 'auto';
+        chatMessages.style.marginBottom = '10px';
     
         // Chat input styling
-        // chatInput.type = 'text';
-        // chatInput.placeholder = 'Type a message...';
-        // chatInput.style.width = 'calc(100% - 50px)';
-        // chatInput.style.marginRight = '5px';
+        chatInput.type = 'text';
+        chatInput.placeholder = 'Type a message...';
+        chatInput.style.width = 'calc(100% - 50px)';
+        chatInput.style.marginRight = '5px';
     
         // Chat send button
-        // chatSendButton.textContent = 'Send';
-        // chatSendButton.style.width = '40px';
+        chatSendButton.textContent = 'Send';
+        chatSendButton.style.width = '40px';
     
         // Add elements to chat window
-        // chatWindow.appendChild(chatMessages);
-        // const inputContainer = document.createElement('div');
-        // inputContainer.style.display = 'flex';
-        // inputContainer.appendChild(chatInput);
-        // inputContainer.appendChild(chatSendButton);
-        // chatWindow.appendChild(inputContainer);
-        // document.body.appendChild(chatWindow);
+        chatWindow.appendChild(chatMessages);
+        const inputContainer = document.createElement('div');
+        inputContainer.style.display = 'flex';
+        inputContainer.appendChild(chatInput);
+        inputContainer.appendChild(chatSendButton);
+        chatWindow.appendChild(inputContainer);
+        document.body.appendChild(chatWindow);
     
         // Toggle chat window on button click
-        // chatButton.addEventListener('click', () => {
-        //     chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
-        // });
+        chatButton.addEventListener('click', () => {
+            chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+        });
     
         // Handle WebSocket events
-        // socket.onopen = () => {
-        //     console.log("WebSocket connection established");
-        // };
+        socket.onopen = () => {
+            console.log("WebSocket connection established");
+        };
     
-        // socket.onmessage = (event) => {
-        //     const message = event.data;
-        //     const messageElement = document.createElement('div');
-        //     messageElement.textContent = `Server: ${message}`;
-        //     chatMessages.appendChild(messageElement);
-        //     chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
-        // };
+        socket.onmessage = (event) => {
+            const message = event.data;
+            const messageElement = document.createElement('div');
+            messageElement.textContent = `Server: ${message}`;
+            chatMessages.appendChild(messageElement);
+            chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+        };
     
-        // socket.onerror = (error) => {
-        //     console.error("WebSocket error:", error);
-        // };
+        socket.onerror = (error) => {
+            console.error("WebSocket error:", error);
+        };
     
-        // socket.onclose = () => {
-        //     console.log("WebSocket connection closed");
-        // };
+        socket.onclose = () => {
+            console.log("WebSocket connection closed");
+        };
     
         // Send message to server on button click
-        // chatSendButton.addEventListener('click', () => {
-        //     const message = chatInput.value;
-        //     if (message.trim() !== '') {
-        //         socket.send(message);
-        //         const messageElement = document.createElement('div');
-        //         messageElement.textContent = `You: ${message}`;
-        //         messageElement.style.textAlign = 'right';
-        //         chatMessages.appendChild(messageElement);
-        //         chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
-        //         chatInput.value = ''; // Clear input
-        //     }
-        // });
+        chatSendButton.addEventListener('click', () => {
+            const message = chatInput.value;
+            if (message.trim() !== '') {
+                socket.send(message);
+                const messageElement = document.createElement('div');
+                messageElement.textContent = `You: ${message}`;
+                messageElement.style.textAlign = 'right';
+                chatMessages.appendChild(messageElement);
+                chatMessages.scrollTop = chatMessages.scrollHeight; // Auto-scroll
+                chatInput.value = ''; // Clear input
+            }
+        });
     
         // Send message on Enter key press
-        // chatInput.addEventListener('keypress', (event) => {
-        //     if (event.key === 'Enter') {
-        //         chatSendButton.click();
-        //     }
-        // });
+        chatInput.addEventListener('keypress', (event) => {
+            if (event.key === 'Enter') {
+                chatSendButton.click();
+            }
+        });
     </script>
 
     {% block script %}

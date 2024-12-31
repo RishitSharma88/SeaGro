@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+        .chat-container {
+            width: 80%;
+            max-width: 600px;
+            margin: 50px auto;
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        #messages {
+            list-style: none;
+            padding: 0;
+            max-height: 300px;
+            overflow-y: scroll;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #messages li {
+            padding: 8px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        #messages li:last-child {
+            border-bottom: none;
+        }
+        .message-input {
+            display: flex;
+            margin-top: 10px;
+        }
+        .message-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .message-input button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .message-input button:hover {
+            background-color: #0056b3;
+        }
+        .username-container {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .username-container input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        .username-container button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .username-container button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="username-container">
+            <input id="usernameInput" type="text" placeholder="Enter your username...">
+            <button id="setUsernameButton">Set Username</button>
+        </div>
+        <ul id="messages"></ul>
+        <div class="message-input">
+            <input id="messageInput" type="text" placeholder="Type a message...">
+            <button id="sendButton">Send</button>
+        </div>
+    </div>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+        let username = 'Anonymous';
+
+        const messages = document.getElementById('messages');
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const usernameInput = document.getElementById('usernameInput');
+        const setUsernameButton = document.getElementById('setUsernameButton');
+
+        setUsernameButton.addEventListener('click', () => {
+            const enteredUsername = usernameInput.value.trim();
+            if (enteredUsername) {
+                username = enteredUsername;
+                alert(`Username set to: ${username}`);
+            } else {
+                alert('Please enter a valid username.');
+            }
+        });
+
+        socket.on('connect', () => {
+            console.log('Connected to server');
+        });
+
+        socket.on('message', (data) => {
+            const li = document.createElement('li');
+            li.textContent = data;
+            messages.appendChild(li);
+            messages.scrollTop = messages.scrollHeight; // Auto-scroll to the latest message
+        });
+
+        sendButton.addEventListener('click', () => {
+            const message = messageInput.value.trim();
+            if (message) {
+                socket.send(`${username}: ${message}`); // Send message with username
+                messageInput.value = ''; // Clear the input
+            }
+        });
+
+        messageInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendButton.click();
+            }
+        });
+    </script>
+</body>
+</html>
