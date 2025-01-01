@@ -236,7 +236,6 @@
             border: 1px solid #a4a5a5;
             padding: 10px;
             margin-top: 10px;
-            background: linear-gradient(to bottom right,#a1dcdc,#194949);
         }
 
         .post {
@@ -265,7 +264,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #6eedb0;
+            background-color: #f9f9f9;
         }
         .post-meta {
             font-size: 0.9em;
@@ -412,6 +411,7 @@
         <h2>Posts</h2>
         <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
         </div>
+        <p>{{ user.username }}</p>
     </div>
 
 {% endblock %}

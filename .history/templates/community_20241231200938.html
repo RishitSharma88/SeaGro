@@ -36,8 +36,7 @@
             margin-top: 30px;
             margin-bottom: 20px;
             overflow-y:scroll;
-            background: linear-gradient(to bottom left, #af45a8, #320327);
-            color: rgb(100, 208, 241);
+            background:linear-gradient(to bottom right,#f4c300,#ff5733);
         }
 
         .rightcontainer {
@@ -45,8 +44,7 @@
             width: 25%;
             margin-top: 30px;
             overflow-y:scroll;
-            color: rgb(100, 208, 241);
-            background: linear-gradient(to bottom left, #af45a8, #320327);
+            background:linear-gradient(to bottom right,#f4c300,#ff5733);
         }
 
         .collapsible {
@@ -233,10 +231,9 @@
         #posts-container {
             max-height: 400px;
             overflow-y: auto;
-            border: 1px solid #a4a5a5;
+            border: 1px solid #ccc;
             padding: 10px;
             margin-top: 10px;
-            background: linear-gradient(to bottom right,#a1dcdc,#194949);
         }
 
         .post {
@@ -244,7 +241,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #6eedb0;
+            background-color: #f9f9f9;
         }
 
         .post-meta {
@@ -265,7 +262,7 @@
             padding: 10px;
             border: 1px solid #ddd;
             border-radius: 5px;
-            background-color: #6eedb0;
+            background-color: #f9f9f9;
         }
         .post-meta {
             font-size: 0.9em;
@@ -412,6 +409,7 @@
         <h2>Posts</h2>
         <div id="posts" style="display: flex; flex-direction: column; gap: 10px;">
         </div>
+        <p>{{ user.username }}</p>
     </div>
 
 {% endblock %}
